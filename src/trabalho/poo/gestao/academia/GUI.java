@@ -23,7 +23,7 @@ public class GUI {
         
         builder.append("------ Menu de Acesso ------");
         builder.append("\n1. Logar");
-        builder.append("\n2. Sair");
+        builder.append("\n0. Sair");
         
         opc_menu = Integer.parseInt(JOptionPane.showInputDialog(builder));
         
@@ -63,6 +63,7 @@ public class GUI {
         builder.append("\n6. CRUD Mensalidade");
         builder.append("\n7. Movimentação Financeira");
         builder.append("\n8. Relatórios");
+        builder.append("\n0. Sair");
 
         return Integer.parseInt(JOptionPane.showInputDialog(builder));
     }
@@ -78,6 +79,7 @@ public class GUI {
         builder.append("\n3. CRUD Treino");
         builder.append("\n4. Avaliação Física");
         builder.append("\n5. CRUD Mensalidade");
+        builder.append("\n0. Sair");
 
         return Integer.parseInt(JOptionPane.showInputDialog(builder));
     }
@@ -90,6 +92,7 @@ public class GUI {
         builder.append("\n" + usuario.getTipoUser() + "\n");
         builder.append("\n1. Ficha de Treino");
         builder.append("\n2. Ver Avaliação Física");
+        builder.append("\n0. Sair");
 
         return Integer.parseInt(JOptionPane.showInputDialog(builder));
     }

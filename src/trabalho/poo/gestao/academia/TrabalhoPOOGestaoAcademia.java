@@ -18,22 +18,34 @@ public class TrabalhoPOOGestaoAcademia {
      */
     public static void main(String[] args) {
         
+        //Criação de objeto GUI, o qual será utilizado para chamar as opções de I/O do programa
         GUI gui = new GUI();
+
+        //Inicialização das DAOs, populando alguns dos objetos que serão criados
         AcademiaDAO academiaDAO = new AcademiaDAO();
         PessoaDAO pessoaDAO = new PessoaDAO();
         
+        //Variáveis de controle do menu:
+        //  exit ➞ variável de saída do programa
+        //  menuExit ➞ variável de saída dos menus de usuários
         int exit = 0;
         int menuExit = 0;
         int opc;
         
+        //Loop do programa
         while(exit != -1)
         {
+            //Receber a opção escolhida pelo usuário ao iniciar o programa
             opc = gui.menuInicial();
             switch (opc) {
+                //Realizar o login do usuário, informando login e senha
                 case 1:
+                    //Objeto receptor do usuário que logou no sistema
                     Pessoa usuarioLogado = gui.login();
+                    //Variável de saída do menu, precisa ser iniciada com algum valor != -1 antes de entrar nos loops
                     menuExit = 0;
                     
+                    //Menu do usuário com acesso de Administrador
                     if(usuarioLogado.getTipoUser().equals("administrador"))
                     {
                         while(menuExit != -1)
@@ -83,6 +95,7 @@ public class TrabalhoPOOGestaoAcademia {
                             }
                         }
                     }
+                    //Menu do usuário com acesso de Instrutor
                     else if(usuarioLogado.getTipoUser().equals("instrutor"))
                     {
                         while(menuExit != -1)
@@ -120,6 +133,7 @@ public class TrabalhoPOOGestaoAcademia {
                             }
                         }
                     }
+                    //Menu do usuário com acesso de Aluno
                     else if(usuarioLogado.getTipoUser().equals("aluno"))
                     {
                         while(menuExit != -1)
@@ -147,10 +161,12 @@ public class TrabalhoPOOGestaoAcademia {
                     }
                     break;
                     
-                case 2:
+                //Saída do programa
+                case 0:
                     exit = -1;
                     break;
                     
+                //Valor DEFAULT mantém o programa rodando até que seja informado o valor correto para a saída
                 default:
                     exit = 0;
             }
