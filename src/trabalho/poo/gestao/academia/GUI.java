@@ -13,8 +13,17 @@ import javax.swing.JOptionPane;
  */
 public class GUI {
     
-    PessoaDAO pessoaDAO = new PessoaDAO();
     Pessoa usuarioLogado = new Pessoa();
+
+    public StringBuilder headerMenuUser(Pessoa usuario)
+    {
+        StringBuilder builder = new StringBuilder("------ Menu de Usuário ------");
+        builder.append("\nUsuário: ");
+        builder.append(usuario.getNome());
+        builder.append("\n" + usuario.getTipoUser() + "\n");
+
+        return builder;
+    }
 
     public int menuInicial()
     {
@@ -30,7 +39,7 @@ public class GUI {
         return opc_menu;
     }
     
-    public Pessoa login()
+    public Pessoa login(PessoaDAO pessoaDAO)
     {
         StringBuilder builder1 = new StringBuilder("");
         
@@ -51,10 +60,7 @@ public class GUI {
 
     public int menuAdm(Pessoa usuario)
     {
-        StringBuilder builder = new StringBuilder("");
-        builder.append("\nUsuário: ");
-        builder.append(usuario.getNome());
-        builder.append("\n" + usuario.getTipoUser() + "\n");
+        StringBuilder builder = headerMenuUser(usuario);
         builder.append("\n1. Editar academia");
         builder.append("\n2. CRUD Pessoa");
         builder.append("\n3. CRUD Exercício");
@@ -70,10 +76,7 @@ public class GUI {
 
     public int menuInstrutor(Pessoa usuario)
     {
-        StringBuilder builder = new StringBuilder("");
-        builder.append("\nUsuário: ");
-        builder.append(usuario.getNome());
-        builder.append("\n" + usuario.getTipoUser() + "\n");
+        StringBuilder builder = headerMenuUser(usuario);
         builder.append("\n1. CRUD Aluno");
         builder.append("\n2. CRUD Exercício");
         builder.append("\n3. CRUD Treino");
@@ -86,14 +89,115 @@ public class GUI {
 
     public int menuAluno(Pessoa usuario)
     {
-        StringBuilder builder = new StringBuilder("");
-        builder.append("\nUsuário: ");
-        builder.append(usuario.getNome());
-        builder.append("\n" + usuario.getTipoUser() + "\n");
+        StringBuilder builder = headerMenuUser(usuario);
         builder.append("\n1. Ficha de Treino");
         builder.append("\n2. Ver Avaliação Física");
         builder.append("\n0. Sair");
 
         return Integer.parseInt(JOptionPane.showInputDialog(builder));
+    }
+
+    public void crudPessoa(Pessoa usuario, PessoaDAO pessoaDAO)
+    {
+        int opc;
+        String tipoUser = usuario.getTipoUser();
+        StringBuilder builder = headerMenuUser(usuario);
+
+        if(tipoUser.equals("administrador"))
+        {
+            builder.append("\n1. Criar novo usuário");
+            builder.append("\n2. Ver usuários");
+            builder.append("\n3. Atualizar usuário");
+            builder.append("\n4. Deletar usuário");
+        }
+        else if(tipoUser.equals("instrutor"))
+        {
+            builder.append("\n1. Criar novo aluno");
+            builder.append("\n2. Ver alunos");
+            builder.append("\n3. Atualizar aluno");
+            builder.append("\n4. Deletar aluno");
+        }
+        
+
+        opc = Integer.parseInt(JOptionPane.showInputDialog(builder));
+
+        if(opc == 1)
+        {
+            Pessoa p = new Pessoa();
+            builder = headerMenuUser(usuario);
+            builder.append("\nInforme o nome do novo usuário");
+            p.setNomePessoa(JOptionPane.showInputDialog(builder));
+
+
+            int sex;
+            builder = headerMenuUser(usuario);
+            builder.append("\nInforme o sexo do novo usuário");
+            builder.append("\n1. Feminino");
+            builder.append("\n2. Masculino");
+            sex = Integer.parseInt(JOptionPane.showInputDialog(builder));
+            if(sex == 1)
+            {
+                p.setSexo('F');
+            }
+            else if(sex == 2)
+            {
+                p.setSexo('M');
+            }
+
+
+            builder = headerMenuUser(usuario);
+            builder.append("\nInforme a data de nascimento do novo usuário");
+            p.setNascimento(JOptionPane.showInputDialog(builder));
+
+
+            builder = headerMenuUser(usuario);
+            builder.append("\nInforme o login do novo usuário");
+            p.setLogin(JOptionPane.showInputDialog(builder));
+
+
+            builder = headerMenuUser(usuario);
+            builder.append("\nInforme a senha do novo usuário");
+            p.setSenha(JOptionPane.showInputDialog(builder));
+
+            if(tipoUser.equals("administrador"))
+            {
+                builder = headerMenuUser(usuario);
+                builder.append("\nInforme o nivel de acesso do novo usuário");
+                builder.append("\n1. Administrador");
+                builder.append("\n2. Instrutor");
+                builder.append("\n3. Aluno");
+                p.setTipoUser(Integer.parseInt(JOptionPane.showInputDialog(builder)));
+            }
+            else if(tipoUser.equals("instrutor"))
+            {
+                p.setTipoUser(3);
+            }
+
+
+            p.setDataID();
+
+            pessoaDAO.adicionarPessoa(p);
+        }
+        else if(opc == 2)
+        {
+            builder = headerMenuUser(usuario);
+            builder.append(pessoaDAO.mostrarUsuarios(usuario));
+            JOptionPane.showMessageDialog(null, builder);
+        }
+        else if(opc == 3)
+        {
+            builder = headerMenuUser(usuario);
+        }
+        else if(opc == 4)
+        {
+            builder = headerMenuUser(usuario);
+        }
+        else
+        {
+            builder = headerMenuUser(usuario);
+            builder.append("Opção inválida!");
+            JOptionPane.showMessageDialog(null, builder);
+        }
+        
     }
 }

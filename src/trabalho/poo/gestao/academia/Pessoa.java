@@ -80,7 +80,17 @@ public class Pessoa {
         this.id = ++Pessoa.serial;
     }
 
+    void setModData()
+    {
+        this.data_modificacao = LocalDate.now();
+    }
 
+
+
+    public long getID()
+    {
+        return this.id;
+    }
 
     public String getNome()
     {

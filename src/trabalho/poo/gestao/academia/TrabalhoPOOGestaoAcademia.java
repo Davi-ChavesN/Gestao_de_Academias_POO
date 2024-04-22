@@ -4,7 +4,7 @@
  */
 package trabalho.poo.gestao.academia;
 
-import javax.swing.JOptionPane;
+//import javax.swing.JOptionPane;
 
 /**
  *
@@ -41,7 +41,7 @@ public class TrabalhoPOOGestaoAcademia {
                 //Realizar o login do usuário, informando login e senha
                 case 1:
                     //Objeto receptor do usuário que logou no sistema
-                    Pessoa usuarioLogado = gui.login();
+                    Pessoa usuarioLogado = gui.login(pessoaDAO);
                     //Variável de saída do menu, precisa ser iniciada com algum valor != -1 antes de entrar nos loops
                     menuExit = 0;
                     
@@ -58,7 +58,7 @@ public class TrabalhoPOOGestaoAcademia {
                                     break;
 
                                 case 2:
-                                    
+                                    gui.crudPessoa(usuarioLogado, pessoaDAO);
                                     break;
 
                                 case 3:
@@ -104,7 +104,7 @@ public class TrabalhoPOOGestaoAcademia {
 
                             switch (menuExit) {
                                 case 1:
-                                    
+                                    gui.crudPessoa(usuarioLogado, pessoaDAO);
                                     break;
 
                                 case 2:
