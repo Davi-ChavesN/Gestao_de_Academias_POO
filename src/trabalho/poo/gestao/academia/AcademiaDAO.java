@@ -16,8 +16,8 @@ public class AcademiaDAO {
     public AcademiaDAO()
     {
         Academia acad = new Academia();
-        acad.setNomeAcad("Gym Noxus");
-        acad.setEnderecoAcad("Noxus");
+        acad.setNomeAcad("Gym Ionia");
+        acad.setEnderecoAcad("Ionia");
         acad.setDataID();
     }
 }

@@ -18,21 +18,21 @@ public class PessoaDAO {
     public PessoaDAO()
     {      
         Pessoa p = new Pessoa();
-        p.setNomePessoa("Draven");
+        p.setNomePessoa("Sett");
         p.setSexo('M');
         p.setNascimento("11/09/2001");
-        p.setLogin("Draven");
-        p.setSenha("Draven");
+        p.setLogin("O Chefe");
+        p.setSenha("mamis");
         p.setTipoUser(1);
         p.setDataID();
         pessoa[0] = p;
         
         p = new Pessoa();
-        p.setNomePessoa("Katarina");
+        p.setNomePessoa("Ahri");
         p.setSexo('F');
         p.setNascimento("15/12/2002");
-        p.setLogin("Kat");
-        p.setSenha("Garen");
+        p.setLogin("Kitsune");
+        p.setSenha("raposa");
         p.setTipoUser(2);
         p.setDataID();
         pessoa[1] = p;
@@ -63,7 +63,7 @@ public class PessoaDAO {
     public void adicionarPessoa(Pessoa p)
     {
         int i = 0;
-        while(pessoa[i] != null && i < pessoa.length)
+        while(pessoa[i] != null && i < pessoa.length-1)
         {
             i++;
         }
@@ -73,6 +73,11 @@ public class PessoaDAO {
             if(pessoa[i] == null)
             {
                 pessoa[i] = p;
+            }
+            else
+            {
+                StringBuilder builder = new StringBuilder("Não é possível adicionar mais pessoas!");
+                JOptionPane.showMessageDialog(null, builder);
             }
         }
         else
@@ -111,6 +116,68 @@ public class PessoaDAO {
                 }
             }
         }
+
+        return builder;
+    }
+
+    public void editUser(int id_edit, long ID, String att)
+    {
+        StringBuilder builder = new StringBuilder();
+        for (Pessoa p : pessoa)
+        {
+            if(p != null && p.getID() == ID)
+            {
+                if(id_edit == 1)
+                {
+                    p.setNomePessoa(att);
+                }
+                else if(id_edit == 2)
+                {
+                    p.setSexo(att.charAt(0));
+                }
+                else if(id_edit == 3)
+                {
+                    p.setNascimento(att);
+                }
+                else if(id_edit == 4)
+                {
+                    p.setLogin(att);
+                }
+                else if(id_edit == 5)
+                {
+                    p.setSenha(att);
+                }
+                else if(id_edit == 6)
+                {
+                    p.setTipoUser(Integer.parseInt(att));
+                }
+            }
+        }
+    }
+
+    public StringBuilder delUser(long ID)
+    {
+        StringBuilder builder = new StringBuilder();
+        int i = 0;
+        boolean deleted = false;
+        for (Pessoa p : pessoa)
+        {
+            if(p != null && p.getID() == ID)
+            {
+                pessoa[i] = null;
+                deleted = true;
+            }
+            i++;
+        }
+
+        if(deleted == true)
+        {
+            builder.append("\nUsuário deletado com sucesso!");
+        }
+        else
+        {
+            builder.append("\nUsuário não encontrado!");
+        }        
 
         return builder;
     }
