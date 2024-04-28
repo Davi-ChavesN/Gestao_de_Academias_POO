@@ -26,6 +26,7 @@ public class TrabalhoPOOGestaoAcademia {
         //Inicialização das DAOs, populando alguns dos objetos que serão criados
         AcademiaDAO academiaDAO = new AcademiaDAO();
         PessoaDAO pessoaDAO = new PessoaDAO();
+        ExercicioDAO exercicioDAO = new ExercicioDAO();
         
         //Variáveis de controle do menu:
         //  exit ➞ variável de saída do programa
@@ -55,39 +56,39 @@ public class TrabalhoPOOGestaoAcademia {
                             menuExit = gui.menuAdm(usuarioLogado);
                             switch (menuExit) 
                             {
-                                case 1:
+                                case 1://Crud Academia
                                     
                                     break;
 
-                                case 2:
+                                case 2://Crud Pessoa
                                     gui.crudPessoa(usuarioLogado, pessoaDAO);
                                     break;
 
-                                case 3:
+                                case 3://Crud Exercicio
+                                    gui.crudExercicio(usuarioLogado, exercicioDAO);
+                                    break;
+
+                                case 4://Crud Treino
                                     
                                     break;
 
-                                case 4:
+                                case 5://Avaliação Física
                                     
                                     break;
 
-                                case 5:
+                                case 6://Crud Mensalidade
                                     
                                     break;
 
-                                case 6:
+                                case 7://Movimentação Financeira
                                     
                                     break;
 
-                                case 7:
+                                case 8://Relatórios
                                     
                                     break;
 
-                                case 8:
-                                    
-                                    break;
-
-                                case 0:
+                                case 0://Saída do Menu Administrador
                                     menuExit = -1;
                                     break;
                             
@@ -105,27 +106,27 @@ public class TrabalhoPOOGestaoAcademia {
                             menuExit = gui.menuInstrutor(usuarioLogado);
 
                             switch (menuExit) {
-                                case 1:
+                                case 1://Crud Aluno
                                     gui.crudPessoa(usuarioLogado, pessoaDAO);
                                     break;
 
-                                case 2:
+                                case 2://Crud Exercicio
+                                    gui.crudExercicio(usuarioLogado, exercicioDAO);
+                                    break;
+
+                                case 3://Crud Treino
                                     
                                     break;
 
-                                case 3:
+                                case 4://Avaliação Física
                                     
                                     break;
 
-                                case 4:
+                                case 5://Crud Mensalidade
                                     
                                     break;
 
-                                case 5:
-                                    
-                                    break;
-
-                                case 0:
+                                case 0://Saída do Menu Instrutor
                                     menuExit = -1;
                                     break;
                             
@@ -143,15 +144,15 @@ public class TrabalhoPOOGestaoAcademia {
                             menuExit = gui.menuAluno(usuarioLogado);
 
                             switch (menuExit) {
-                                case 1:
+                                case 1://Ficha de Treino
                                     
                                     break;
 
-                                case 2:
+                                case 2://Visualização Avaliação Física
                                     
                                     break;
 
-                                case 0:
+                                case 0://Saída do Menu Aluno
                                     menuExit = -1;
                                     break;
                             

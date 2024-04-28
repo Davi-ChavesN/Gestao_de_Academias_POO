@@ -120,9 +120,10 @@ public class PessoaDAO {
         return builder;
     }
 
-    public void editUser(int id_edit, long ID, String att)
+    public StringBuilder editUser(int id_edit, long ID, String att)
     {
         StringBuilder builder = new StringBuilder();
+        boolean atualizado = false;
         for (Pessoa p : pessoa)
         {
             if(p != null && p.getID() == ID)
@@ -151,8 +152,21 @@ public class PessoaDAO {
                 {
                     p.setTipoUser(Integer.parseInt(att));
                 }
+                p.setModData();
+                atualizado = true;
             }
         }
+
+        if(atualizado == true)
+        {
+            builder.append("\nUsuário atualizado com sucesso!");
+        }
+        else
+        {
+            builder.append("\nUsuário não encontrado!");
+        }
+
+        return builder;
     }
 
     public StringBuilder delUser(long ID)
