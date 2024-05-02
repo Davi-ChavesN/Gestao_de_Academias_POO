@@ -1,4 +1,4 @@
-package trabalho.poo.gestao.academia;
+package model;
 
 import java.time.LocalDate;
 
@@ -17,29 +17,29 @@ public class Exercicio {
     private static long serial = 0;
 
 
-    void setNomeExercicio(String nome)
+    public void setNomeExercicio(String nome)
     {
         this.nome = nome;
     }
 
-    void setDescricaoExercicio(String descricao)
+    public void setDescricaoExercicio(String descricao)
     {
         this.descricao = descricao;
     }
 
-    void setGrupoMuscular(String grupo_muscular)
+    public void setGrupoMuscular(String grupo_muscular)
     {
         this.grupo_muscular = grupo_muscular;
     }
 
-    void setDataID()
+    public void setDataID()
     {
         this.data_criacao = LocalDate.now();
         this.data_modificacao = LocalDate.now();
         this.id = ++Exercicio.serial;
     }
 
-    void setModData()
+    public void setModData()
     {
         this.data_modificacao = LocalDate.now();
     }

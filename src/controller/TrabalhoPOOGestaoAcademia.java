@@ -4,9 +4,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
-package trabalho.poo.gestao.academia;
+package controller;
 
 //import javax.swing.JOptionPane;
+
+import model.AcademiaDAO;
+import model.AvaliacaoFisicaDAO;
+import model.ExercicioDAO;
+import model.Pessoa;
+import model.PessoaDAO;
+import view.GUI;
+
 
 /**
  *
@@ -27,6 +35,7 @@ public class TrabalhoPOOGestaoAcademia {
         AcademiaDAO academiaDAO = new AcademiaDAO();
         PessoaDAO pessoaDAO = new PessoaDAO();
         ExercicioDAO exercicioDAO = new ExercicioDAO();
+        AvaliacaoFisicaDAO avaliacaoFisicaDAO = new AvaliacaoFisicaDAO();
         
         //Variáveis de controle do menu:
         //  exit ➞ variável de saída do programa
@@ -57,7 +66,7 @@ public class TrabalhoPOOGestaoAcademia {
                             switch (menuExit) 
                             {
                                 case 1://Crud Academia
-                                    
+                                    gui.crudAcademia(usuarioLogado, academiaDAO);
                                     break;
 
                                 case 2://Crud Pessoa
@@ -73,7 +82,7 @@ public class TrabalhoPOOGestaoAcademia {
                                     break;
 
                                 case 5://Avaliação Física
-                                    
+                                    gui.crudAvaliacaoFisica(usuarioLogado, avaliacaoFisicaDAO, pessoaDAO);
                                     break;
 
                                 case 6://Crud Mensalidade
@@ -119,7 +128,7 @@ public class TrabalhoPOOGestaoAcademia {
                                     break;
 
                                 case 4://Avaliação Física
-                                    
+                                    gui.crudAvaliacaoFisica(usuarioLogado, avaliacaoFisicaDAO, pessoaDAO);
                                     break;
 
                                 case 5://Crud Mensalidade
@@ -149,7 +158,7 @@ public class TrabalhoPOOGestaoAcademia {
                                     break;
 
                                 case 2://Visualização Avaliação Física
-                                    
+                                    gui.crudAvaliacaoFisica(usuarioLogado, avaliacaoFisicaDAO, pessoaDAO);
                                     break;
 
                                 case 0://Saída do Menu Aluno

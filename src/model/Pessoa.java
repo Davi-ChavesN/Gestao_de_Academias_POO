@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package trabalho.poo.gestao.academia;
+package model;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -31,33 +31,33 @@ public class Pessoa {
     }
     
     
-    void setNomePessoa(String nome_pessoa)
+    public void setNomePessoa(String nome_pessoa)
     {
         this.nome = nome_pessoa;
     }
     
-    void setSexo(char sexo_pessoa)
+    public void setSexo(char sexo_pessoa)
     {
         this.sexo = sexo_pessoa;
     }
     
-    void setNascimento(String nascimento)
+    public void setNascimento(String nascimento)
     {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         this.nascimento = LocalDate.parse(nascimento, dtf);
     }
     
-    void setLogin(String login)
+    public void setLogin(String login)
     {
         this.login = login;
     }
     
-    void setSenha(String senha)
+    public void setSenha(String senha)
     {
         this.senha = senha;
     }
     
-    void setTipoUser(int nvl_user)
+    public void setTipoUser(int nvl_user)
     {
         if(nvl_user == 1)
         {
@@ -73,14 +73,14 @@ public class Pessoa {
         }
     }
     
-    void setDataID()
+    public void setDataID()
     {
         this.data_criacao = LocalDate.now();
         this.data_modificacao = LocalDate.now();
         this.id = ++Pessoa.serial;
     }
 
-    void setModData()
+    public void setModData()
     {
         this.data_modificacao = LocalDate.now();
     }

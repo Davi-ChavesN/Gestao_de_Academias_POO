@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package trabalho.poo.gestao.academia;
+package model;
 
 import javax.swing.JOptionPane;
 
@@ -196,4 +196,19 @@ public class PessoaDAO {
         return builder;
     }
     
+    public Pessoa pegaUsuario(long id)
+    {
+        Pessoa usuarioAF = new Pessoa();
+
+        for (Pessoa p : pessoa)
+        {
+            if(p != null && p.getID() == id)
+            {
+                usuarioAF = p;
+            }
+        }
+
+        return usuarioAF;
+    }
+
 }

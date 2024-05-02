@@ -2,9 +2,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package trabalho.poo.gestao.academia;
+package view;
 
 import javax.swing.JOptionPane;
+
+import model.AcademiaDAO;
+import model.AvaliacaoFisica;
+import model.AvaliacaoFisicaDAO;
+import model.Exercicio;
+import model.ExercicioDAO;
+import model.Pessoa;
+import model.PessoaDAO;
 
 /**
  *
@@ -108,6 +116,58 @@ public class GUI {
         return Integer.parseInt(JOptionPane.showInputDialog(builder));
     }
 
+    public void crudAcademia(Pessoa usuario, AcademiaDAO academiaDAO)
+    {
+        int opc_edit = 0;
+        String att = "";
+        StringBuilder menuBuilder = headerMenuUser(usuario);
+        StringBuilder builder = headerMenuUser(usuario);
+
+        menuBuilder.append("\n1. Ver dados da Academia");
+        menuBuilder.append("\n2. Alterar nome da Academia");
+        menuBuilder.append("\n3. Alterar endereço da Academia");
+        menuBuilder.append("\n0. Voltar");
+
+        while(opc_edit != -1)
+        {
+            opc_edit = Integer.parseInt(JOptionPane.showInputDialog(menuBuilder));
+        
+            if(opc_edit == 1)
+            {
+                builder = headerMenuUser(usuario);
+                builder.append(academiaDAO.editAcademia(opc_edit, att));
+                JOptionPane.showMessageDialog(null, builder);
+            }
+            else if(opc_edit == 2)
+            {
+                builder.append("\nInforme o novo nome da academia");
+                
+                att = JOptionPane.showInputDialog(builder);
+
+                builder = headerMenuUser(usuario);
+                builder.append(academiaDAO.editAcademia(opc_edit, att));
+                JOptionPane.showMessageDialog(null, builder);
+            }
+            else if(opc_edit == 3)
+            {
+                builder.append("\nInforme o novo endereço da academia");
+
+                att = JOptionPane.showInputDialog(builder);
+
+                builder = headerMenuUser(usuario);
+                builder.append(academiaDAO.editAcademia(opc_edit, att));
+                JOptionPane.showMessageDialog(null, builder);
+            }
+            else if(opc_edit == 0)
+            {
+                opc_edit = -1;
+            }
+        }
+
+        
+        
+    }
+
     public void crudPessoa(Pessoa usuario, PessoaDAO pessoaDAO)
     {
         int opc = 0;
@@ -121,7 +181,6 @@ public class GUI {
             menuBuilder.append("\n2. Ver usuários");
             menuBuilder.append("\n3. Atualizar usuário");
             menuBuilder.append("\n4. Deletar usuário");
-            menuBuilder.append("\n0. Voltar");
         }
         else if(tipoUser.equals("instrutor"))
         {
@@ -129,8 +188,8 @@ public class GUI {
             menuBuilder.append("\n2. Ver alunos");
             menuBuilder.append("\n3. Atualizar aluno");
             menuBuilder.append("\n4. Deletar aluno");
-            menuBuilder.append("\n0. Voltar");
         }
+        menuBuilder.append("\n0. Voltar");
         
 
         while(opc != -1)
@@ -341,7 +400,7 @@ public class GUI {
         menuBuilder.append("\n2. Ver exercícios");
         menuBuilder.append("\n3. Atualizar exercícios");
         menuBuilder.append("\n4. Deletar exercício");
-        menuBuilder.append("\n0. Sair");
+        menuBuilder.append("\n0. Voltar");
 
         while(opc != -1)
         {
@@ -443,6 +502,74 @@ public class GUI {
             {
                 opc = 0;
             }
+        }
+    }
+
+    public void crudAvaliacaoFisica(Pessoa usuario, AvaliacaoFisicaDAO avaliacaoFisicaDAO, PessoaDAO pessoaDAO)
+    {
+        StringBuilder menubuilder = new StringBuilder();
+
+        int opc = 0;
+        String tipo_user = usuario.getTipoUser();
+
+        menubuilder = headerMenuUser(usuario);
+        menubuilder.append("\n1. Ver avaliação física");
+
+        if(tipo_user != "aluno")
+        {
+            menubuilder.append("\n2. Ver todas as avaliações físicas");
+            menubuilder.append("\n3. Iniciar nova avaliação física");
+        }
+        menubuilder.append("\n0. Voltar");
+
+        while(opc != -1)
+        {
+            StringBuilder builder = headerMenuUser(usuario);
+            opc = Integer.parseInt(JOptionPane.showInputDialog(menubuilder));
+
+            if(opc == 1)
+            {
+                builder.append(avaliacaoFisicaDAO.mostrarAvaliacaoFisica(usuario));
+                JOptionPane.showMessageDialog(null, builder);
+            }
+            else if(opc == 2 && tipo_user != "aluno")
+            {
+                builder.append(avaliacaoFisicaDAO.mostrarTodasAvaliacoesFisicas());
+                JOptionPane.showMessageDialog(null, builder);
+            }
+            else if(opc == 2 && tipo_user == "aluno")
+            {
+
+            }
+            else if(opc == 3 && tipo_user != "aluno")
+            {
+                Pessoa usuarioAF = new Pessoa();
+                usuarioAF = null;
+                while(usuarioAF == null)
+                {
+                    usuarioAF = pessoaDAO.pegaUsuario(Long.parseLong(JOptionPane.showInputDialog("\nInforme o ID do usuário que realizará a AF")));
+                }
+
+                float peso, altura;
+                peso = Float.parseFloat(JOptionPane.showInputDialog("\nInforme o peso"));
+                altura = Float.parseFloat(JOptionPane.showInputDialog("\nInforme a altura"));
+
+                AvaliacaoFisica af = (avaliacaoFisicaDAO.novaAvaliacaoFisica(usuarioAF, peso, altura));
+                builder.append(avaliacaoFisicaDAO.mostrarAvaliacaoFisica(usuarioAF));
+                JOptionPane.showMessageDialog(null, builder);
+
+                float nota = -1;
+                while(nota < 0 || nota > 10)
+                {
+                    nota = Float.parseFloat(JOptionPane.showInputDialog("\nDeixe uma nota para a avaliação fisica"));
+                }
+                avaliacaoFisicaDAO.notaAvaliacaoFisica(af, nota);
+            }
+            else if(opc == 0)
+            {
+                opc = -1;
+            }
+            
         }
     }
 }

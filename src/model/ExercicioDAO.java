@@ -1,4 +1,4 @@
-package trabalho.poo.gestao.academia;
+package model;
 
 
 /**
