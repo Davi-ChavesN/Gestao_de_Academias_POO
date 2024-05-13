@@ -13,6 +13,7 @@ import model.AvaliacaoFisicaDAO;
 import model.ExercicioDAO;
 import model.Pessoa;
 import model.PessoaDAO;
+import model.TreinoDAO;
 import view.GUI;
 
 
@@ -36,6 +37,7 @@ public class TrabalhoPOOGestaoAcademia {
         PessoaDAO pessoaDAO = new PessoaDAO();
         ExercicioDAO exercicioDAO = new ExercicioDAO();
         AvaliacaoFisicaDAO avaliacaoFisicaDAO = new AvaliacaoFisicaDAO();
+        TreinoDAO treinoDAO = new TreinoDAO();
         
         //Variáveis de controle do menu:
         //  exit ➞ variável de saída do programa
@@ -78,7 +80,7 @@ public class TrabalhoPOOGestaoAcademia {
                                     break;
 
                                 case 4://Crud Treino
-                                    
+                                    gui.crudTreino(usuarioLogado, treinoDAO);
                                     break;
 
                                 case 5://Avaliação Física

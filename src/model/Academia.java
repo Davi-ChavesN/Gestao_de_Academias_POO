@@ -5,8 +5,6 @@
 package model;
 
 import java.time.LocalDate;
-import java.util.Random;
-import javax.swing.JOptionPane;
 
 /**
  *

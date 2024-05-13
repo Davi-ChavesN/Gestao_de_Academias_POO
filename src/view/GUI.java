@@ -13,6 +13,7 @@ import model.Exercicio;
 import model.ExercicioDAO;
 import model.Pessoa;
 import model.PessoaDAO;
+import model.TreinoDAO;
 
 /**
  *
@@ -571,5 +572,10 @@ public class GUI {
             }
             
         }
+    }
+
+    public void crudTreino(Pessoa usuario, TreinoDAO treinoDAO)
+    {
+
     }
 }

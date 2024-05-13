@@ -22,7 +22,6 @@ public class Pessoa {
     private String tipo_user;
     private LocalDate data_criacao;
     private LocalDate data_modificacao;
-    private boolean logado;
     private static long serial = 0;
 
     @Override
