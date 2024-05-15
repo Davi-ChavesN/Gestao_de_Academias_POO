@@ -117,56 +117,16 @@ public class GUI {
         return Integer.parseInt(JOptionPane.showInputDialog(builder));
     }
 
-    public void crudAcademia(Pessoa usuario, AcademiaDAO academiaDAO)
+    public int crudAcademia(Pessoa usuario, AcademiaDAO academiaDAO)
     {
-        int opc_edit = 0;
-        String att = "";
         StringBuilder menuBuilder = headerMenuUser(usuario);
-        StringBuilder builder = headerMenuUser(usuario);
 
         menuBuilder.append("\n1. Ver dados da Academia");
         menuBuilder.append("\n2. Alterar nome da Academia");
         menuBuilder.append("\n3. Alterar endereço da Academia");
         menuBuilder.append("\n0. Voltar");
 
-        while(opc_edit != -1)
-        {
-            opc_edit = Integer.parseInt(JOptionPane.showInputDialog(menuBuilder));
-        
-            if(opc_edit == 1)
-            {
-                builder = headerMenuUser(usuario);
-                builder.append(academiaDAO.editAcademia(opc_edit, att));
-                JOptionPane.showMessageDialog(null, builder);
-            }
-            else if(opc_edit == 2)
-            {
-                builder.append("\nInforme o novo nome da academia");
-                
-                att = JOptionPane.showInputDialog(builder);
-
-                builder = headerMenuUser(usuario);
-                builder.append(academiaDAO.editAcademia(opc_edit, att));
-                JOptionPane.showMessageDialog(null, builder);
-            }
-            else if(opc_edit == 3)
-            {
-                builder.append("\nInforme o novo endereço da academia");
-
-                att = JOptionPane.showInputDialog(builder);
-
-                builder = headerMenuUser(usuario);
-                builder.append(academiaDAO.editAcademia(opc_edit, att));
-                JOptionPane.showMessageDialog(null, builder);
-            }
-            else if(opc_edit == 0)
-            {
-                opc_edit = -1;
-            }
-        }
-
-        
-        
+        return Integer.parseInt(JOptionPane.showInputDialog(menuBuilder));
     }
 
     public void crudPessoa(Pessoa usuario, PessoaDAO pessoaDAO)

@@ -6,6 +6,8 @@
  */
 package controller;
 
+import javax.swing.JOptionPane;
+
 //import javax.swing.JOptionPane;
 
 import model.AcademiaDAO;
@@ -68,7 +70,44 @@ public class TrabalhoPOOGestaoAcademia {
                             switch (menuExit) 
                             {
                                 case 1://Crud Academia
-                                    gui.crudAcademia(usuarioLogado, academiaDAO);
+                                    int opc_crud_academia = 0;
+                                    String att = "";
+                                    while(opc_crud_academia != -1)
+                                    {
+                                        StringBuilder builder = new StringBuilder();
+                                        opc_crud_academia = gui.crudAcademia(usuarioLogado, academiaDAO);
+
+                                        if(opc_crud_academia == 1)
+                                        {
+                                            builder = gui.headerMenuUser(usuarioLogado);
+                                            builder.append(academiaDAO.editAcademia(opc_crud_academia, att));
+                                            JOptionPane.showMessageDialog(null, builder);
+                                        }
+                                        else if(opc_crud_academia == 2)
+                                        {
+                                            builder.append("\nInforme o novo nome da academia");
+                                            
+                                            att = JOptionPane.showInputDialog(builder);
+
+                                            builder = gui.headerMenuUser(usuarioLogado);
+                                            builder.append(academiaDAO.editAcademia(opc_crud_academia, att));
+                                            JOptionPane.showMessageDialog(null, builder);
+                                        }
+                                        else if(opc_crud_academia == 3)
+                                        {
+                                            builder.append("\nInforme o novo endereço da academia");
+
+                                            att = JOptionPane.showInputDialog(builder);
+
+                                            builder = gui.headerMenuUser(usuarioLogado);
+                                            builder.append(academiaDAO.editAcademia(opc_crud_academia, att));
+                                            JOptionPane.showMessageDialog(null, builder);
+                                        }
+                                        else if(opc_crud_academia == 0)
+                                        {
+                                            opc_crud_academia = -1;
+                                        }
+                                    }
                                     break;
 
                                 case 2://Crud Pessoa
