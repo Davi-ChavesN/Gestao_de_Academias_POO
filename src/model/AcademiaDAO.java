@@ -4,6 +4,7 @@
  */
 package model;
 
+import java.time.LocalDate;
 
 /**
  *
@@ -19,6 +20,7 @@ public class AcademiaDAO {
         acad.setNomeAcad("Gym Ionia");
         acad.setEnderecoAcad("Ionia");
         acad.setDataID();
+        acad.setCalend(LocalDate.now());
     }
 
     public StringBuilder editAcademia(int opc, String att)
@@ -45,5 +47,15 @@ public class AcademiaDAO {
         acad.setModData();        
 
         return builder;
+    }
+
+    public void editCalend(int dias)
+    {
+        acad.setCalend(acad.getCalend().plusDays(dias));
+    }
+
+    public LocalDate pegarCalend()
+    {
+        return acad.getCalend();
     }
 }

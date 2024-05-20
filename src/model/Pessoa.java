@@ -30,6 +30,7 @@ public class Pessoa {
     }
     
     
+    /* Funções de Set */
     public void setNomePessoa(String nome_pessoa)
     {
         this.nome = nome_pessoa;
@@ -85,7 +86,7 @@ public class Pessoa {
     }
 
 
-
+    /* Funções de Get */
     public long getID()
     {
         return this.id;

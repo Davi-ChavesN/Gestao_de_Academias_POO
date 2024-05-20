@@ -374,4 +374,21 @@ public class ExercicioDAO {
         return builder;
     }
 
+    public Exercicio getExercicio(Long id)
+    {
+        Exercicio e = new Exercicio();
+
+        int i = 0;
+        while(exercicio[i] != null && exercicio[i].getIDExercicio() != id)
+        {
+            i++;
+        }
+
+        if(exercicio[i] != null)
+        {
+            e = exercicio[i];
+        }
+
+        return e;
+    }
 }

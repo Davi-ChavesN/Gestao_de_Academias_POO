@@ -6,14 +6,8 @@ package view;
 
 import javax.swing.JOptionPane;
 
-import model.AcademiaDAO;
-import model.AvaliacaoFisica;
-import model.AvaliacaoFisicaDAO;
-import model.Exercicio;
-import model.ExercicioDAO;
 import model.Pessoa;
 import model.PessoaDAO;
-import model.TreinoDAO;
 
 /**
  *
@@ -83,8 +77,8 @@ public class GUI {
         StringBuilder builder = headerMenuUser(usuario);
         builder.append("\n1. Editar academia");
         builder.append("\n2. CRUD Pessoa");
-        builder.append("\n3. CRUD Exercício");
-        builder.append("\n4. CRUD Treino");
+        builder.append("\n3. Menu de Exercícios");
+        builder.append("\n4. Menu de Treinos");
         builder.append("\n5. Avaliação Física");
         builder.append("\n6. CRUD Mensalidade");
         builder.append("\n7. Movimentação Financeira");
@@ -98,8 +92,8 @@ public class GUI {
     {
         StringBuilder builder = headerMenuUser(usuario);
         builder.append("\n1. CRUD Aluno");
-        builder.append("\n2. CRUD Exercício");
-        builder.append("\n3. CRUD Treino");
+        builder.append("\n2. Menu de Exercícios");
+        builder.append("\n3. Menu de Treinos");
         builder.append("\n4. Avaliação Física");
         builder.append("\n5. CRUD Mensalidade");
         builder.append("\n0. Sair");
@@ -117,24 +111,25 @@ public class GUI {
         return Integer.parseInt(JOptionPane.showInputDialog(builder));
     }
 
-    public int crudAcademia(Pessoa usuario, AcademiaDAO academiaDAO)
+    public int menuAcademia(Pessoa usuario)
     {
         StringBuilder menuBuilder = headerMenuUser(usuario);
 
         menuBuilder.append("\n1. Ver dados da Academia");
         menuBuilder.append("\n2. Alterar nome da Academia");
         menuBuilder.append("\n3. Alterar endereço da Academia");
+        menuBuilder.append("\n4. Alterar data Calendario");
+        menuBuilder.append("\n5. Mostrar data Calendario");
+        menuBuilder.append("\n6. Mostrar log de Entrada de Alunos");
         menuBuilder.append("\n0. Voltar");
 
         return Integer.parseInt(JOptionPane.showInputDialog(menuBuilder));
     }
 
-    public void crudPessoa(Pessoa usuario, PessoaDAO pessoaDAO)
+    public int crudPessoa(Pessoa usuario)
     {
-        int opc = 0;
         String tipoUser = usuario.getTipoUser();
         StringBuilder menuBuilder = headerMenuUser(usuario);
-        StringBuilder builder = headerMenuUser(usuario);
 
         if(tipoUser.equals("administrador"))
         {
@@ -152,210 +147,23 @@ public class GUI {
         }
         menuBuilder.append("\n0. Voltar");
         
-
-        while(opc != -1)
-        {
-            opc = Integer.parseInt(JOptionPane.showInputDialog(menuBuilder));
-
-            if(opc == 1)//Criar Usuário
-            {
-                Pessoa p = new Pessoa();
-                builder = headerMenuUser(usuario);
-                builder.append("\nInforme o nome do novo usuário");
-                p.setNomePessoa(JOptionPane.showInputDialog(builder));
-
-
-                int sex;
-                builder = headerMenuUser(usuario);
-                builder.append("\nInforme o sexo do novo usuário");
-                builder.append("\n1. Feminino");
-                builder.append("\n2. Masculino");
-                sex = Integer.parseInt(JOptionPane.showInputDialog(builder));
-                if(sex == 1)
-                {
-                    p.setSexo('F');
-                }
-                else if(sex == 2)
-                {
-                    p.setSexo('M');
-                }
-
-
-                builder = headerMenuUser(usuario);
-                builder.append("\nInforme a data de nascimento do novo usuário");
-                p.setNascimento(JOptionPane.showInputDialog(builder));
-
-
-                builder = headerMenuUser(usuario);
-                builder.append("\nInforme o login do novo usuário");
-                p.setLogin(JOptionPane.showInputDialog(builder));
-
-
-                builder = headerMenuUser(usuario);
-                builder.append("\nInforme a senha do novo usuário");
-                p.setSenha(JOptionPane.showInputDialog(builder));
-
-                if(tipoUser.equals("administrador"))
-                {
-                    builder = headerMenuUser(usuario);
-                    builder.append("\nInforme o nivel de acesso do novo usuário");
-                    builder.append("\n1. Administrador");
-                    builder.append("\n2. Instrutor");
-                    builder.append("\n3. Aluno");
-                    p.setTipoUser(Integer.parseInt(JOptionPane.showInputDialog(builder)));
-                }
-                else if(tipoUser.equals("instrutor"))
-                {
-                    p.setTipoUser(3);
-                }
-
-
-                p.setDataID();
-
-                pessoaDAO.adicionarPessoa(p);
-            }
-            else if(opc == 2)//Mostrar Usuários
-            {
-                builder = headerMenuUser(usuario);
-                builder.append("\nUsuarios cadastrados");
-                builder.append(pessoaDAO.mostrarUsuarios(usuario));
-                JOptionPane.showMessageDialog(null, builder);
-            }
-            else if(opc == 3)//Atualizar Usuário
-            {
-                builder = headerMenuUser(usuario);
-                builder.append("\nInforme o ID do usuário a ser editado");
-                long id_edit = Long.parseLong(JOptionPane.showInputDialog(builder));
-
-                builder = headerMenuUser(usuario);
-                builder.append("\n--- Editar Usuários ---\n");
-                builder.append("\n1. Editar nome");
-                builder.append("\n2. Editar sexo");
-                builder.append("\n3. Editar data de nascimento");
-                builder.append("\n4. Editar login");
-                builder.append("\n5. Editar senha");
-                
-                if(usuario.getTipoUser().equals("administrador"))
-                {
-                    builder.append("\n6. Editar tipo de usuário");
-                }
-
-                builder.append("\n0. Sair");
-
-                int opc_edit = 0;
-                while(opc_edit != -1)
-                {
-                    opc_edit = Integer.parseInt(JOptionPane.showInputDialog(builder));
-                    StringBuilder editValue = headerMenuUser(usuario);
-
-                    if (opc_edit == 1)//Editar nome do Usuário
-                    {
-                        editValue.append("\nInforme o novo nome!");
-                        String novo_nome = JOptionPane.showInputDialog(editValue);
-                        editValue = headerMenuUser(usuario);
-                        editValue.append(pessoaDAO.editUser(opc_edit, id_edit, novo_nome));
-                        JOptionPane.showMessageDialog(null, editValue);
-                    }
-                    else if(opc_edit == 2)//Editar sexo do Usuário
-                    {
-                        editValue.append("\nInforme o sexo!");
-                        editValue.append("\n1. Masculino");
-                        editValue.append("\n2. Feminino");
-                        int sexOpc = Integer.parseInt(JOptionPane.showInputDialog(editValue));
-                        if(sexOpc == 1)
-                        {
-                            String novo_sexo = "M";
-                            editValue = headerMenuUser(usuario);
-                            editValue.append(pessoaDAO.editUser(opc_edit, id_edit, novo_sexo));
-                        }
-                        else if(sexOpc == 2)
-                        {
-                            String novo_sexo = "F";
-                            editValue = headerMenuUser(usuario);
-                            editValue.append(pessoaDAO.editUser(opc_edit, id_edit, novo_sexo));
-                        }
-                        else
-                        {
-                            JOptionPane.showConfirmDialog(null, "Valor inválido!");
-                        }
-                    }
-                    else if(opc_edit == 3)//Editar data de nascimento do Usuário
-                    {
-                        editValue.append("\nInforme a data de nascimento! dd/mm/yyyy");
-                        String nova_dt_nasc = JOptionPane.showInputDialog(editValue);
-                        editValue = headerMenuUser(usuario);
-                        editValue.append(pessoaDAO.editUser(opc_edit, id_edit, nova_dt_nasc));
-                    }
-                    else if(opc_edit == 4)//Editar login do Usuário
-                    {
-                        editValue.append("Informe o novo login!");
-                        String novo_login = JOptionPane.showInputDialog(editValue);
-                        editValue = headerMenuUser(usuario);
-                        editValue.append(pessoaDAO.editUser(opc_edit, id_edit, novo_login));
-                    }
-                    else if(opc_edit == 5)//Editar senha do Usuário
-                    {
-                        editValue.append("\nInforme a nova senha!");
-                        String nova_senha = JOptionPane.showInputDialog(editValue);
-                        editValue = headerMenuUser(usuario);
-                        editValue.append(pessoaDAO.editUser(opc_edit, id_edit, nova_senha));
-                    }
-                    else if(opc_edit == 6 && usuario.getTipoUser().equals("administrador"))//Editar nivel de acesso do Usuário
-                    {
-                        editValue.append("\nInforme a nova senha!");
-                        editValue.append("\n1. Administrador");
-                        editValue.append("\n2. Instrutor");
-                        editValue.append("\n3. Aluno");
-                        String novo_tipo_user = JOptionPane.showInputDialog(editValue);
-                        editValue = headerMenuUser(usuario);
-                        editValue.append(pessoaDAO.editUser(opc_edit, id_edit, novo_tipo_user));
-                    }
-                    else if(opc_edit == 0)
-                    {
-                        opc_edit = -1;
-                    }
-                    else
-                    {
-                        opc_edit = 0;
-                    }
-                }
-            }
-            else if(opc == 4)//Deletar Usuário
-            {
-                builder = headerMenuUser(usuario);
-                builder.append("\n--- Deletar Usuários ---\n");
-                builder.append("\nInforme o ID do usuário a ser deletado");
-                long IDdel = Long.parseLong(JOptionPane.showInputDialog(builder));
-                while(IDdel == usuario.getID())
-                {
-                    builder = headerMenuUser(usuario);
-                    builder.append("\nVocê não pode deletar seu próprio usuário!");
-                    builder.append("\nInforme o ID do usuário a ser deletado");
-                    IDdel = Long.parseLong(JOptionPane.showInputDialog(builder));
-                }
-                builder = headerMenuUser(usuario);
-                builder.append(pessoaDAO.delUser(IDdel));
-                JOptionPane.showMessageDialog(null, builder);
-            }
-            else if(opc == 0)
-            {
-                opc = -1;
-            }
-            else
-            {
-                StringBuilder builder2 = new StringBuilder();
-                builder2 = headerMenuUser(usuario);
-                builder2.append("Opção inválida!");
-                JOptionPane.showMessageDialog(null, builder2);
-            }
-        }
+        return Integer.parseInt(JOptionPane.showInputDialog(menuBuilder));
     }
 
-    public void crudExercicio(Pessoa usuario, ExercicioDAO exercicioDAO)
+    public int menuExercicio(Pessoa usuario)
     {
-        int opc = 0;
         StringBuilder menuBuilder = headerMenuUser(usuario);
-        StringBuilder builder = headerMenuUser(usuario);
+
+        menuBuilder.append("\n1. CRUD Exercicio");
+        menuBuilder.append("\n2. CRUD Exercicio Aplicação");
+        menuBuilder.append("\n0. Voltar");
+
+        return Integer.parseInt(JOptionPane.showInputDialog(menuBuilder));
+    }
+
+    public int crudExercicio(Pessoa usuario)
+    {
+        StringBuilder menuBuilder = headerMenuUser(usuario);
 
         menuBuilder.append("\n1. Adicionar exercício");
         menuBuilder.append("\n2. Ver exercícios");
@@ -363,114 +171,26 @@ public class GUI {
         menuBuilder.append("\n4. Deletar exercício");
         menuBuilder.append("\n0. Voltar");
 
-        while(opc != -1)
-        {
-            opc = Integer.parseInt(JOptionPane.showInputDialog(menuBuilder));
-
-            if(opc == 1)//Adicionar Exercicio
-            {
-                Exercicio e = new Exercicio();
-                builder = headerMenuUser(usuario);
-                builder.append("\nInforme o nome do exercício");
-                e.setNomeExercicio(JOptionPane.showInputDialog(builder));
-
-                builder = headerMenuUser(usuario);
-                builder.append("\nInforme a descrição do exercício");
-                e.setDescricaoExercicio(JOptionPane.showInputDialog(builder));
-
-                builder = headerMenuUser(usuario);
-                builder.append("\nInforme o grupo muscular do exercício");
-                e.setGrupoMuscular(JOptionPane.showInputDialog(builder));
-
-                e.setDataID();
-
-                builder = headerMenuUser(usuario);
-                builder.append(exercicioDAO.adicionarExercicio(e));
-                JOptionPane.showMessageDialog(null, builder);
-            }
-            else if(opc == 2)//Ver Exercicios
-            {
-                builder = headerMenuUser(usuario);
-                builder.append("\nExercicios cadastrados");
-                builder.append(exercicioDAO.mostrarExercicios(usuario));
-                JOptionPane.showMessageDialog(null, builder);
-            }
-            else if(opc == 3)//Atualizar Exercicio
-            {
-                builder = headerMenuUser(usuario);
-                builder.append("\nInforme o ID do exercício a ser editado");
-                long id_edit = Long.parseLong(JOptionPane.showInputDialog(builder));
-
-                builder = headerMenuUser(usuario);
-                builder.append("\n--- Editar Exercício ---\n");
-                builder.append("\n1. Editar nome");
-                builder.append("\n2. Editar descrição");
-                builder.append("\n3. Editar grupo muscular");
-                builder.append("\n0. Sair");
-
-                int opc_edit = 0;
-                while(opc_edit != -1)
-                {
-                    opc_edit = Integer.parseInt(JOptionPane.showInputDialog(builder));
-                    StringBuilder editValue = headerMenuUser(usuario);
-
-                    if (opc_edit == 1)//Editar nome do exercício
-                    {
-                        editValue.append("\nInforme o novo nome!");
-                        String novo_nome = JOptionPane.showInputDialog(editValue);
-                        editValue = headerMenuUser(usuario);
-                        editValue.append(exercicioDAO.editExercicio(opc_edit, id_edit, novo_nome));
-                    }
-                    else if(opc_edit == 2)//Editar descrição do exercício
-                    {
-                        editValue.append("\nInforme a nova descição!");
-                        String nova_descricao = JOptionPane.showInputDialog(editValue);
-                        editValue = headerMenuUser(usuario);
-                        editValue.append(exercicioDAO.editExercicio(opc_edit, id_edit, nova_descricao));
-                    }
-                    else if(opc_edit == 3)//Editar grupo muscular do exercício
-                    {
-                        editValue.append("\nInforme o grupo muscular!");
-                        String novo_grupo_muscular = JOptionPane.showInputDialog(editValue);
-                        editValue = headerMenuUser(usuario);
-                        editValue.append(exercicioDAO.editExercicio(opc_edit, id_edit, novo_grupo_muscular));
-                    }
-                    else if(opc_edit == 0)
-                    {
-                        opc_edit = -1;
-                    }
-                    else
-                    {
-                        opc_edit = 0;
-                    }
-                }
-            }
-            else if(opc == 4)//Deletar Exercicio
-            {
-                builder = headerMenuUser(usuario);
-                builder.append("\n--- Deletar Exercício ---\n");
-                builder.append("\nInforme o ID do exercício a ser deletado");
-                long IDdel = Long.parseLong(JOptionPane.showInputDialog(builder));
-                builder = headerMenuUser(usuario);
-                builder.append(exercicioDAO.delExercicio(IDdel));
-                JOptionPane.showMessageDialog(null, builder);
-            }
-            else if(opc == 0)//Saída do Menu de CRUD de Exercicio
-            {
-                opc = -1;
-            }
-            else
-            {
-                opc = 0;
-            }
-        }
+        return Integer.parseInt(JOptionPane.showInputDialog(menuBuilder));
     }
 
-    public void crudAvaliacaoFisica(Pessoa usuario, AvaliacaoFisicaDAO avaliacaoFisicaDAO, PessoaDAO pessoaDAO)
+    public int crudExercicioAplicacao(Pessoa usuario)
+    {
+        StringBuilder menuBuilder = headerMenuUser(usuario);
+
+        menuBuilder.append("\n1. Adicionar Aplicação de Exercício");
+        menuBuilder.append("\n2. Ver Aplicações dos Exercícios");
+        menuBuilder.append("\n3. Atualizar Aplicação de um Exercício");
+        menuBuilder.append("\n4. Deletar Aplicação de Exercício");
+        menuBuilder.append("\n0. Voltar");
+
+        return Integer.parseInt(JOptionPane.showInputDialog(menuBuilder));
+    }
+    
+    public int crudAvaliacaoFisica(Pessoa usuario)
     {
         StringBuilder menubuilder = new StringBuilder();
 
-        int opc = 0;
         String tipo_user = usuario.getTipoUser();
 
         menubuilder = headerMenuUser(usuario);
@@ -483,59 +203,122 @@ public class GUI {
         }
         menubuilder.append("\n0. Voltar");
 
-        while(opc != -1)
-        {
-            StringBuilder builder = headerMenuUser(usuario);
-            opc = Integer.parseInt(JOptionPane.showInputDialog(menubuilder));
-
-            if(opc == 1)
-            {
-                builder.append(avaliacaoFisicaDAO.mostrarAvaliacaoFisica(usuario));
-                JOptionPane.showMessageDialog(null, builder);
-            }
-            else if(opc == 2 && tipo_user != "aluno")
-            {
-                builder.append(avaliacaoFisicaDAO.mostrarTodasAvaliacoesFisicas());
-                JOptionPane.showMessageDialog(null, builder);
-            }
-            else if(opc == 2 && tipo_user == "aluno")
-            {
-
-            }
-            else if(opc == 3 && tipo_user != "aluno")
-            {
-                Pessoa usuarioAF = new Pessoa();
-                usuarioAF = null;
-                while(usuarioAF == null)
-                {
-                    usuarioAF = pessoaDAO.pegaUsuario(Long.parseLong(JOptionPane.showInputDialog("\nInforme o ID do usuário que realizará a AF")));
-                }
-
-                float peso, altura;
-                peso = Float.parseFloat(JOptionPane.showInputDialog("\nInforme o peso"));
-                altura = Float.parseFloat(JOptionPane.showInputDialog("\nInforme a altura"));
-
-                AvaliacaoFisica af = (avaliacaoFisicaDAO.novaAvaliacaoFisica(usuarioAF, peso, altura));
-                builder.append(avaliacaoFisicaDAO.mostrarAvaliacaoFisica(usuarioAF));
-                JOptionPane.showMessageDialog(null, builder);
-
-                float nota = -1;
-                while(nota < 0 || nota > 10)
-                {
-                    nota = Float.parseFloat(JOptionPane.showInputDialog("\nDeixe uma nota para a avaliação fisica"));
-                }
-                avaliacaoFisicaDAO.notaAvaliacaoFisica(af, nota);
-            }
-            else if(opc == 0)
-            {
-                opc = -1;
-            }
-            
-        }
+        return Integer.parseInt(JOptionPane.showInputDialog(menubuilder));
     }
 
-    public void crudTreino(Pessoa usuario, TreinoDAO treinoDAO)
+    public int menuTreino(Pessoa usuario)
     {
+        StringBuilder menuBuilder = headerMenuUser(usuario);
 
+        menuBuilder.append("\n1. CRUD Divisão de Treino");
+        menuBuilder.append("\n2. CRUD Divisão de Treino-Musculo");
+        menuBuilder.append("\n3. CRUD Treino");
+        menuBuilder.append("\n4. CRUD Treino Aplicação");
+        menuBuilder.append("\n0. Voltar");
+
+        return Integer.parseInt(JOptionPane.showInputDialog(menuBuilder));
+    }
+
+    public int crudDivisaoTreino(Pessoa usuario)
+    {
+        StringBuilder menuBuilder = headerMenuUser(usuario);
+
+        menuBuilder.append("\n1. Adicionar Divisão de Treino");
+        menuBuilder.append("\n2. Ver Divisões de Treino");
+        menuBuilder.append("\n3. Atualizar Divisões de Treino");
+        menuBuilder.append("\n4. Excluir Divisão de Treino");
+        menuBuilder.append("\n0. Voltar");
+
+        return Integer.parseInt(JOptionPane.showInputDialog(menuBuilder));
+    }
+
+    public int crudDivisaoTreinoMusculo(Pessoa usuario)
+    {
+        StringBuilder menuBuilder = headerMenuUser(usuario);
+
+        menuBuilder.append("\n1. Adicionar Divisão de Treino-Musculo");
+        menuBuilder.append("\n2. Ver Divisões de Treino-Musculo");
+        menuBuilder.append("\n3. Atualizar Divisões de Treino-Musculo");
+        menuBuilder.append("\n4. Excluir Divisão de Treino-Musculo");
+        menuBuilder.append("\n0. Voltar");
+
+        return Integer.parseInt(JOptionPane.showInputDialog(menuBuilder));
+    }
+
+    public int crudTreino(Pessoa usuario)
+    {
+        StringBuilder menuBuilder = headerMenuUser(usuario);
+
+        menuBuilder.append("\n1. Adicionar Treino");
+        menuBuilder.append("\n2. Ver Treinos");
+        menuBuilder.append("\n3. Atualizar Treino");
+        menuBuilder.append("\n4. Excluir Treino");
+        menuBuilder.append("\n0. Voltar");
+
+        return Integer.parseInt(JOptionPane.showInputDialog(menuBuilder));
+    }
+
+    public int crudTreinoAplicacao(Pessoa usuario)
+    {
+        StringBuilder menuBuilder = headerMenuUser(usuario);
+
+        menuBuilder.append("\n1. Adicionar Aplicação de Treino");
+        menuBuilder.append("\n2. Ver Aplicações de Treino");
+        menuBuilder.append("\n3. Atualizar Aplicação de Treino");
+        menuBuilder.append("\n4. Excluir Alpicação de Treino");
+        menuBuilder.append("\n0. Voltar");
+
+        return Integer.parseInt(JOptionPane.showInputDialog(menuBuilder));
+    }
+
+    public int menuFinanceiro(Pessoa usuario)
+    {
+        StringBuilder menuBuilder = headerMenuUser(usuario);
+
+        menuBuilder.append("\n1. CRUD Mensalidade Vigente");
+        menuBuilder.append("\n2. CRUD Pagamento Mensalidade Aluno");
+        menuBuilder.append("\n3. CRUD Pagamento Recorrente");
+        menuBuilder.append("\n0. Voltar");
+
+        return Integer.parseInt(JOptionPane.showInputDialog(menuBuilder));
+    }
+
+    public int crudMensalidadeVigente(Pessoa usuario)
+    {
+        StringBuilder menuBuilder = headerMenuUser(usuario);
+
+        menuBuilder.append("\n1. Adicionar Mensalidade Vigente");
+        menuBuilder.append("\n2. Ver Mensalidades Vigente");
+        menuBuilder.append("\n3. Atualizar Mensalidade Vigente");
+        menuBuilder.append("\n4. Excluir Mensalidade Vigente");
+        menuBuilder.append("\n0. Voltar");
+
+        return Integer.parseInt(JOptionPane.showInputDialog(menuBuilder));
+    }
+
+    public int crudPagamentoMensalidadeAluno(Pessoa usuario)
+    {
+        StringBuilder menuBuilder = headerMenuUser(usuario);
+
+        menuBuilder.append("\n1. Adicionar Pagamento da Mensalidade de Aluno");
+        menuBuilder.append("\n2. Ver Pagamentos da Mensalidade de Aluno");
+        menuBuilder.append("\n3. Atualizar Pagamento da Mensalidade de Aluno");
+        menuBuilder.append("\n4. Excluir Pagamento da Mensalidade de Aluno");
+        menuBuilder.append("\n0. Voltar");
+
+        return Integer.parseInt(JOptionPane.showInputDialog(menuBuilder));
+    }
+
+    public int crudPagamentoRecorrente(Pessoa usuario)
+    {
+        StringBuilder menuBuilder = headerMenuUser(usuario);
+
+        menuBuilder.append("\n1. Adicionar Pagamento Recorrente");
+        menuBuilder.append("\n2. Ver Pagamentos Recorrentes");
+        menuBuilder.append("\n3. Atualizar Pagamento Recorrente");
+        menuBuilder.append("\n4. Excluir Pagamento Recorrente");
+        menuBuilder.append("\n0. Voltar");
+
+        return Integer.parseInt(JOptionPane.showInputDialog(menuBuilder));
     }
 }

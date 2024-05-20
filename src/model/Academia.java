@@ -19,12 +19,25 @@ public class Academia {
     private LocalDate data_modificacao;
     private static long serial = 0;
 
+    private LocalDate calend;
+
+    public void setCalend(LocalDate data)
+    {
+        this.calend = data;
+    }
+
+    public LocalDate getCalend()
+    {
+        return this.calend;
+    }
+
     @Override
     public String toString() {
         return "Academia{" + "id=" + id + ", nome=" + nome + ", endereco=" + endereco + ", data_criacao=" + data_criacao + ", data_modificacao=" + data_modificacao + '}';
     }
     
     
+    /* Funções de Set */
     public void setNomeAcad(String nome_acad)
     {
         this.nome = nome_acad;
@@ -48,6 +61,7 @@ public class Academia {
     }
     
 
+    /* Funções de Get */
     public String getNomeAcad()
     {
         return this.nome;
