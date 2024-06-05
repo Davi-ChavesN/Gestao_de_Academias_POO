@@ -22,7 +22,7 @@ public class Pessoa {
     private String tipo_user;
     private LocalDate data_criacao;
     private LocalDate data_modificacao;
-    private static long serial = 0;
+    private static long pessoa_serial = 0;
 
     @Override
     public String toString() {
@@ -77,7 +77,7 @@ public class Pessoa {
     {
         this.data_criacao = LocalDate.now();
         this.data_modificacao = LocalDate.now();
-        this.id = ++Pessoa.serial;
+        this.id = ++Pessoa.pessoa_serial;
     }
 
     public void setModData()
@@ -110,5 +110,15 @@ public class Pessoa {
     public String getTipoUser()
     {
         return this.tipo_user;
+    }
+
+    public LocalDate getDataCriacao()
+    {
+        return this.data_criacao;
+    }
+
+    public LocalDate getDataModificacao()
+    {
+        return this.data_modificacao;
     }
 }

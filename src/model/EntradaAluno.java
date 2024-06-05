@@ -2,11 +2,13 @@ package model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class EntradaAluno {
 
     private long id;
     private LocalDateTime date_time;
+    private String nome;
     private LocalDate data_criacao;
     private LocalDate data_modificacao;
     private static long serial = 0;
@@ -16,6 +18,11 @@ public class EntradaAluno {
     public void setDateTime(LocalDateTime date_time)
     {
         this.date_time = date_time;
+    }
+
+    public void setNomeAlunoIntoEntradaAluno(String nome)
+    {
+        this.nome = nome;
     }
 
     public void setDataID()
@@ -39,6 +46,24 @@ public class EntradaAluno {
 
     public LocalDateTime getDateTimeEntradaAluno()
     {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm:ss");
+        this.date_time.format(dtf);
+        
         return this.date_time;
+    }
+
+    public String getNomeAlunoFromEntradaAluno()
+    {
+        return this.nome;
+    }
+
+    public LocalDate getDataCriacao()
+    {
+        return this.data_criacao;
+    }
+
+    public LocalDate getDataModificacao()
+    {
+        return this.data_modificacao;
     }
 }

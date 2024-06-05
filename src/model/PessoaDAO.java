@@ -60,8 +60,19 @@ public class PessoaDAO {
         return null;
     }
 
-    public void adicionarPessoa(Pessoa p)
+    public void createPessoa(String nome, char sexo, String dt_nasc, String login, String senha, int tipo_user)
     {
+        StringBuilder builder = new StringBuilder();
+
+        Pessoa p = new Pessoa();
+        p.setNomePessoa(nome);
+        p.setSexo(sexo);
+        p.setNascimento(dt_nasc);
+        p.setLogin(login);
+        p.setSenha(senha);
+        p.setTipoUser(tipo_user);
+        p.setDataID();
+
         int i = 0;
         while(pessoa[i] != null && i < pessoa.length-1)
         {
@@ -76,18 +87,18 @@ public class PessoaDAO {
             }
             else
             {
-                StringBuilder builder = new StringBuilder("Não é possível adicionar mais pessoas!");
+                builder.append("Não é possível adicionar mais pessoas!");
                 JOptionPane.showMessageDialog(null, builder);
             }
         }
         else
         {
-            StringBuilder builder = new StringBuilder("Deu ruim");
+            builder.append("Deu ruim");
             JOptionPane.showMessageDialog(null, builder);
         }
     }
 
-    public StringBuilder mostrarUsuarios(Pessoa usuario)
+    public StringBuilder readPessoa(Pessoa usuario)
     {
         StringBuilder builder = new StringBuilder("\n");
         String tipoUser = usuario.getTipoUser();
@@ -120,7 +131,7 @@ public class PessoaDAO {
         return builder;
     }
 
-    public StringBuilder editUser(int id_edit, long ID, String att)
+    public StringBuilder updatePessoa(int opc_edit, long ID, String att)
     {
         StringBuilder builder = new StringBuilder();
         boolean atualizado = false;
@@ -128,27 +139,27 @@ public class PessoaDAO {
         {
             if(p != null && p.getID() == ID)
             {
-                if(id_edit == 1)
+                if(opc_edit == 1)
                 {
                     p.setNomePessoa(att);
                 }
-                else if(id_edit == 2)
+                else if(opc_edit == 2)
                 {
                     p.setSexo(att.charAt(0));
                 }
-                else if(id_edit == 3)
+                else if(opc_edit == 3)
                 {
                     p.setNascimento(att);
                 }
-                else if(id_edit == 4)
+                else if(opc_edit == 4)
                 {
                     p.setLogin(att);
                 }
-                else if(id_edit == 5)
+                else if(opc_edit == 5)
                 {
                     p.setSenha(att);
                 }
-                else if(id_edit == 6)
+                else if(opc_edit == 6)
                 {
                     p.setTipoUser(Integer.parseInt(att));
                 }
@@ -169,7 +180,7 @@ public class PessoaDAO {
         return builder;
     }
 
-    public StringBuilder delUser(long ID)
+    public StringBuilder deletePessoa(long ID)
     {
         StringBuilder builder = new StringBuilder();
         int i = 0;

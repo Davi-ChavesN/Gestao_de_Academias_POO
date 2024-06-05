@@ -58,4 +58,9 @@ public class AcademiaDAO {
     {
         return acad.getCalend();
     }
+
+    public Academia retornaAcademia()
+    {
+        return acad;
+    }
 }

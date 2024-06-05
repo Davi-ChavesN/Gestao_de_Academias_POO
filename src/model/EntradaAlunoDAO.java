@@ -2,6 +2,7 @@ package model;
 
 import java.time.LocalDateTime;
 
+
 public class EntradaAlunoDAO {
 
     EntradaAluno[] entradaAluno = new EntradaAluno[100];
@@ -11,9 +12,10 @@ public class EntradaAlunoDAO {
 
     }
 
-    public void createEntradaAluno()
+    public void createEntradaAluno(Pessoa p)
     {
         EntradaAluno entA = new EntradaAluno();
+        entA.setNomeAlunoIntoEntradaAluno(p.getNome());
         entA.setDataID();
         entA.setDateTime(LocalDateTime.now());
 
@@ -41,6 +43,7 @@ public class EntradaAlunoDAO {
             if(entA != null)
             {
                 builder.append("\nID: " + entA.getIDEntradaAluno());
+                builder.append("\nNome: " + entA.getNomeAlunoFromEntradaAluno());
                 builder.append("\nData e Horário: " + entA.getDateTimeEntradaAluno());
                 builder.append("\n");
             }    

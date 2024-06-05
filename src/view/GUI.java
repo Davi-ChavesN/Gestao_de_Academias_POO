@@ -6,6 +6,8 @@ package view;
 
 import javax.swing.JOptionPane;
 
+import model.Academia;
+import model.AcademiaDAO;
 import model.Pessoa;
 import model.PessoaDAO;
 
@@ -16,14 +18,17 @@ import model.PessoaDAO;
  */
 public class GUI {
     
+    AcademiaDAO academiaDAO = new AcademiaDAO();
+    Academia academia = academiaDAO.retornaAcademia();
     Pessoa usuarioLogado = new Pessoa();
 
     public StringBuilder headerMenuUser(Pessoa usuario)
     {
-        StringBuilder builder = new StringBuilder("------ Menu de Usuário ------");
-        builder.append("\nUsuário: ");
-        builder.append(usuario.getNome());
-        builder.append("\n" + usuario.getTipoUser() + "\n");
+        StringBuilder builder = new StringBuilder("---------- ----- ----------");
+        builder.append("\nUsuário: " + usuario.getNome());
+        builder.append("\n" + usuario.getTipoUser());
+        builder.append("\n" + academia.getCalend() + "\n");
+        builder.append("---------- ----- ----------");
 
         return builder;
     }
@@ -44,8 +49,9 @@ public class GUI {
         return opc_menu;
     }
     
-    public Pessoa login(PessoaDAO pessoaDAO)
+    public Pessoa login()
     {
+        PessoaDAO pessoaDAO = new PessoaDAO();
         Pessoa p = null;
         StringBuilder builder = new StringBuilder("");
         
@@ -126,7 +132,7 @@ public class GUI {
         return Integer.parseInt(JOptionPane.showInputDialog(menuBuilder));
     }
 
-    public int crudPessoa(Pessoa usuario)
+    public int menuCrudPessoa(Pessoa usuario)
     {
         String tipoUser = usuario.getTipoUser();
         StringBuilder menuBuilder = headerMenuUser(usuario);
@@ -317,6 +323,19 @@ public class GUI {
         menuBuilder.append("\n2. Ver Pagamentos Recorrentes");
         menuBuilder.append("\n3. Atualizar Pagamento Recorrente");
         menuBuilder.append("\n4. Excluir Pagamento Recorrente");
+        menuBuilder.append("\n0. Voltar");
+
+        return Integer.parseInt(JOptionPane.showInputDialog(menuBuilder));
+    }
+
+    public int crudMovimentacaoFinanceira(Pessoa usuario)
+    {
+        StringBuilder menuBuilder = headerMenuUser(usuario);
+
+        menuBuilder.append("\n1. Criar movimentação financeira");
+        menuBuilder.append("\n2. Ver movimentações financeiras");
+        menuBuilder.append("\n3. Atualizar movimentação financeira");
+        menuBuilder.append("\n4. Deletar movimentação financeira");
         menuBuilder.append("\n0. Voltar");
 
         return Integer.parseInt(JOptionPane.showInputDialog(menuBuilder));

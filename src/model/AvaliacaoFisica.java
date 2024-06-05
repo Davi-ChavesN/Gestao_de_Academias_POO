@@ -10,6 +10,7 @@ public class AvaliacaoFisica {
     private float peso;
     private float altura;
     private float imc;
+    private String imc_result;
     private float result_rating;
     private LocalDate data_criacao;
     private LocalDate data_modificacao;
@@ -39,6 +40,11 @@ public class AvaliacaoFisica {
     public void setIMC(float imc)
     {
         this.imc = imc;
+    }
+
+    public void setImcResult(String result)
+    {
+        this.imc_result = result;
     }
 
     public void setResultRating(float rating)
@@ -84,8 +90,23 @@ public class AvaliacaoFisica {
         return this.imc;
     }
 
+    public String getImcResult()
+    {
+        return this.imc_result;
+    }
+
     public float getResultRating()
     {
         return this.result_rating;
+    }
+
+    public LocalDate getDataCriacao()
+    {
+        return this.data_criacao;
+    }
+
+    public LocalDate getDataModificacao()
+    {
+        return this.data_modificacao;
     }
 }

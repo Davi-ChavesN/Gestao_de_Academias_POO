@@ -6,7 +6,7 @@ public class AvaliacaoFisicaDAO {
     AvaliacaoFisica[] avalicao = new AvaliacaoFisica[100];
 
 
-    public StringBuilder mostrarAvaliacaoFisica(Pessoa usuario)
+    public StringBuilder readAvaliacaoFisica(Pessoa usuario)
     {
         int cont = 0;
         StringBuilder builder = new StringBuilder();
@@ -21,39 +21,11 @@ public class AvaliacaoFisicaDAO {
                 builder.append(" - Altura: " + af.getAltura());
                 builder.append(" - IMC: " + (String.format("%.2f", af.getIMC())));
                 builder.append(" - Nota: " + af.getResultRating());
-
-                if(af.getIMC() < 16.9)
-                {
-                    builder.append("\nMuito abaixo do peso");
-                }
-                else if(af.getIMC() >= 17 && af.getIMC() < 18.5)
-                {
-                    builder.append("\nAbaixo do peso");
-                }
-                else if(af.getIMC() >= 18.5 && af.getIMC() < 25)
-                {
-                    builder.append("\nPeso normal");
-                }
-                else if(af.getIMC() >= 25 && af.getIMC() < 30)
-                {
-                    builder.append("\nAcima do peso");
-                }
-                else if(af.getIMC() >= 30 && af.getIMC() < 35)
-                {
-                    builder.append("\nObesidade Grau I");
-                }
-                else if(af.getIMC() >= 35 && af.getIMC() <= 40)
-                {
-                    builder.append("\nObesidade Grau II");
-                }
-                else if(af.getIMC() > 40)
-                {
-                    builder.append("\nObesidade Grau III");
-                }
-
+                builder.append(" - Resultado: " + af.getImcResult());
+                builder.append("\n");
+                
                 cont++;
             }
-            builder.append("\n");
         }
 
         if(cont == 0)
@@ -63,7 +35,7 @@ public class AvaliacaoFisicaDAO {
         return builder;
     }
 
-    public StringBuilder mostrarTodasAvaliacoesFisicas()
+    public StringBuilder readAllAvaliacoesFisicas()
     {
         StringBuilder builder = new StringBuilder();
         int cont = 0;
@@ -77,6 +49,7 @@ public class AvaliacaoFisicaDAO {
                 builder.append(" - Altura: " + af.getAltura());
                 builder.append(" - IMC: " + (String.format("%.2f", af.getIMC())));
                 builder.append(" - Nota: " + af.getResultRating());
+                builder.append(" - Resultado: " + af.getImcResult());
                 builder.append("\n");
                 cont++;
             }
@@ -89,7 +62,7 @@ public class AvaliacaoFisicaDAO {
         return builder;
     }
 
-    public AvaliacaoFisica novaAvaliacaoFisica(Pessoa usuarioAF, float peso, float altura)
+    public AvaliacaoFisica createAvaliacaoFisica(Pessoa usuarioAF, float peso, float altura)
     {
         AvaliacaoFisica af = new AvaliacaoFisica();
         float imc = peso / (altura * altura);
@@ -99,6 +72,35 @@ public class AvaliacaoFisicaDAO {
         af.setPeso(peso);
         af.setAltura(altura);
         af.setIMC(imc);
+
+        if(af.getIMC() < 16.9)
+        {
+            af.setImcResult("Muito abaixo do peso");
+        }
+        else if(af.getIMC() >= 17 && af.getIMC() < 18.5)
+        {
+            af.setImcResult("Abaixo do peso");
+        }
+        else if(af.getIMC() >= 18.5 && af.getIMC() < 25)
+        {
+            af.setImcResult("Peso normal");
+        }
+        else if(af.getIMC() >= 25 && af.getIMC() < 30)
+        {
+            af.setImcResult("Acima do peso");
+        }
+        else if(af.getIMC() >= 30 && af.getIMC() < 35)
+        {
+            af.setImcResult("Obesidade Grau I");
+        }
+        else if(af.getIMC() >= 35 && af.getIMC() <= 40)
+        {
+            af.setImcResult("Obesidade Grau II");
+        }
+        else if(af.getIMC() > 40)
+        {
+            af.setImcResult("Obesidade Grau III");
+        }
 
         int i = 0;
         while(avalicao[i] != null && i < avalicao.length-1)
@@ -116,8 +118,23 @@ public class AvaliacaoFisicaDAO {
                 return null;
             }
         }       
-        
+
         return af;
+    }
+
+    public StringBuilder readLastAvaliacaoFisica(AvaliacaoFisica af, Pessoa usuario)
+    {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("\nID: " + af.getID());
+        builder.append(" - Nome: " + usuario.getNome());
+        builder.append(" - Peso: " + af.getPeso());
+        builder.append(" - Altura: " + af.getAltura());
+        builder.append(" - IMC: " + (String.format("%.2f", af.getIMC())));
+        builder.append(" - Nota: " + af.getResultRating());
+        builder.append(" - Resultado: " + af.getImcResult());
+
+        return builder;
     }
 
     public void notaAvaliacaoFisica(AvaliacaoFisica af, float nota)

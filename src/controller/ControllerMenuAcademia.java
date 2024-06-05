@@ -13,6 +13,20 @@ public class ControllerMenuAcademia {
     AcademiaDAO academiaDAO = new AcademiaDAO();
     EntradaAlunoDAO entradaAlunoDAO = new EntradaAlunoDAO();
 
+    public Pessoa loginAcademia()
+    {
+        Pessoa p = new Pessoa();
+
+        p = gui.login();
+
+        //if(p.getTipoUser().equals("aluno"))
+        {
+            entradaAlunoDAO.createEntradaAluno(p);
+        }
+
+        return p;
+    }
+
     public void menuAcademia(Pessoa usuarioLogado) 
     {
         int opc_menu_academia = 0;

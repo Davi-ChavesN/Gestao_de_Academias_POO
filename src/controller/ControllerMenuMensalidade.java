@@ -137,7 +137,7 @@ public class ControllerMenuMensalidade {
                         String valor_pago = JOptionPane.showInputDialog(builder);
 
                         builder = gui.headerMenuUser(usuarioLogado);
-                        builder.append(pessoaDAO.mostrarUsuarios(usuarioLogado));
+                        builder.append(pessoaDAO.readPessoa(usuarioLogado));
                         builder.append("\nInforme o ID da pessoa a ser utilizada");
                         Long idP = Long.parseLong(JOptionPane.showInputDialog(builder));
 
@@ -222,7 +222,7 @@ public class ControllerMenuMensalidade {
                     if(opc_crud == 1)//CREATE
                     {
                         StringBuilder builder = gui.headerMenuUser(usuarioLogado);
-                        builder.append(pessoaDAO.mostrarUsuarios(usuarioLogado));
+                        builder.append(pessoaDAO.readPessoa(usuarioLogado));
                         builder.append("\nInforme o ID da pessoa a ser utilizada");
                         Long idP = Long.parseLong(JOptionPane.showInputDialog(builder));
 

@@ -4,43 +4,40 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
-public class MensalidadeVigente {
+public class MovimentacaoFinanceira {
 
-    private Long id;
+    private long id;
     private BigDecimal valor = new BigDecimal("0");
-    private LocalDate inicio;
-    private LocalDate termino;
+    private String tipo;
+    private String descricao;
     private LocalDate data_criacao;
     private LocalDate data_modificacao;
-    private static long serial = 0;
+    private static long movimentacao_financera_serial = 0;
 
     MathContext context = new MathContext(2, RoundingMode.FLOOR);
 
-    /* Funções de Set */
-    public void setValor(String valor)
+    /* Funções de set */
+    public void setValorMovimentacaoFinanceiro(String valor)
     {
         this.valor = new BigDecimal(valor, context);
     }
 
-    public void setInicio(String inicio)
+    public void setTipoMovimentacaoFinanceira(String tipo)
     {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        this.inicio = LocalDate.parse(inicio, dtf);
+        this.tipo = tipo;
     }
 
-    public void setTermino(String termino)
+    public void setDescricaoMovimentacaoFinanceira(String descricao)
     {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        this.termino = LocalDate.parse(termino, dtf);
+        this.descricao = descricao;
     }
 
     public void setDataID()
     {
         this.data_criacao = LocalDate.now();
         this.data_modificacao = LocalDate.now();
-        this.id = ++MensalidadeVigente.serial;
+        this.id = ++MovimentacaoFinanceira.movimentacao_financera_serial;
     }
 
     public void setModData()
@@ -50,24 +47,24 @@ public class MensalidadeVigente {
 
 
     /* Funções de Get */
-    public Long getIDMensalidadeVigente()
+    public long getIDMovimentacaoFinanceira()
     {
         return this.id;
     }
 
-    public BigDecimal getValorMensalidadeVigente()
+    public BigDecimal getValorMovimentacaoFinanceiro()
     {
         return this.valor;
     }
-    
-    public LocalDate getInicioMensalidadeVigente()
+
+    public String getTipoMovimentacaoFinanceira()
     {
-        return this.inicio;
+        return this.tipo;
     }
 
-    public LocalDate getTerminoMensalidadeVigente()
+    public String getDescricaoMovimentacaoFinanceira()
     {
-        return this.termino;
+        return this.descricao;
     }
 
     public LocalDate getDataCriacao()
