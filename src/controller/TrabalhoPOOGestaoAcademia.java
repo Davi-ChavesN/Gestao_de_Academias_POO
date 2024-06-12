@@ -7,7 +7,7 @@
 package controller;
 
 
-
+import data_base_connector.ConnectionFactory;
 import model.Pessoa;
 import view.GUI;
 
@@ -35,6 +35,9 @@ public class TrabalhoPOOGestaoAcademia {
         Pessoa usuarioLogado = new Pessoa();
 
         GUI gui = new GUI();
+
+        ConnectionFactory connectionFactory = new ConnectionFactory();
+        connectionFactory.getConnection();
 
         int opc_menu_inicial = 0;
 
@@ -77,11 +80,11 @@ public class TrabalhoPOOGestaoAcademia {
                                     controllerMenuAvaliacaoFisica.menuAvaliacaoFisica(usuarioLogado);
                                     break;
 
-                                case 6:
+                                case 6: //Menu de Mensalidade
                                     controllerMenuMensalidade.menuMensalidade(usuarioLogado);
                                     break;
 
-                                case 7:
+                                case 7: //Menu de Movimentação Financeira
                                     controllerMenuMovimentacaoFinanceira.menuMovimentacaoFinanceira(usuarioLogado);
                                     break;
 
