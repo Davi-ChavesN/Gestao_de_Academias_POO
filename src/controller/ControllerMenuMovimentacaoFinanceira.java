@@ -41,15 +41,52 @@ public class ControllerMenuMovimentacaoFinanceira {
                     break;
 
                 case 2: //read
-                    
+                    builder = gui.headerMenuUser(usuarioLogado);
+                    builder.append(movimentacaoFinanceiraDAO.readMovimentacaoFinanceira());
+                    JOptionPane.showMessageDialog(null, builder);
                     break;
 
                 case 3: //update
-                    
+                    builder = gui.headerMenuUser(usuarioLogado);
+                    builder.append("\nInforme o ID da Movimentação Financeira a ser atualizada");
+                    long IDatt = Long.parseLong(JOptionPane.showInputDialog(builder));
+
+                    builder = gui.headerMenuUser(usuarioLogado);
+                    builder.append("\nInforme o novo valor da Movimentação Financeira");
+                    String valorAtt = JOptionPane.showInputDialog(builder);
+
+                    builder = gui.headerMenuUser(usuarioLogado);
+                    builder.append("\nInforme o tipo da Movimentação Financeira");
+                    int MF = Integer.parseInt(JOptionPane.showInputDialog(builder));
+                    String tipoAtt = "";
+                    if(MF == 1)
+                    {
+                        tipoAtt = "Entrada";
+                    }
+                    else if(MF == 2)
+                    {
+                        tipoAtt = "Saida";
+                    }
+
+                    builder = gui.headerMenuUser(usuarioLogado);
+                    builder.append("\nInforme a descrição da Movimentação Financeira");
+                    String descricaoAtt = JOptionPane.showInputDialog(builder);
+
+                    builder = gui.headerMenuUser(usuarioLogado);
+                    builder.append(movimentacaoFinanceiraDAO.updateMovimentacaoFinanceira(IDatt, valorAtt, tipoAtt, descricaoAtt));
+
+                    JOptionPane.showMessageDialog(null, builder);
                     break;
 
                 case 4: //delete
-                    
+                    builder = gui.headerMenuUser(usuarioLogado);
+                    builder.append("\nInforme o ID da Movimentação Financeira a ser deletada");
+                    long IDdel = Long.parseLong(JOptionPane.showInputDialog(builder));
+
+                    builder = gui.headerMenuUser(usuarioLogado);
+                    builder.append(movimentacaoFinanceiraDAO.deleteMovimentacaoFinanceira(IDdel));
+
+                    JOptionPane.showMessageDialog(null, builder);
                     break;
 
                 case 0: //voltar

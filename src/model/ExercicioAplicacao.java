@@ -7,8 +7,14 @@ public class ExercicioAplicacao {
     private String descricao;
     private LocalDate data_criacao;
     private LocalDate data_modificacao;
-    private static long serial = 0;
+    private static long serialExercicioAplicacao = 0;
 
+
+    /* Funções de Set */
+    public void setId(Long id)
+    {
+        this.id = id;
+    }
 
     public void setDescricaoExercicioAplicacao(String descricao)
     {
@@ -19,7 +25,7 @@ public class ExercicioAplicacao {
     {
         this.data_criacao = LocalDate.now();
         this.data_modificacao = LocalDate.now();
-        this.id = ++ExercicioAplicacao.serial;
+        this.id = ++ExercicioAplicacao.serialExercicioAplicacao;
     }
 
     public void setModData()
@@ -28,6 +34,7 @@ public class ExercicioAplicacao {
     }
 
 
+    /* Funções de Get */
     public long getIDExercicioAplicacao()
     {
         return this.id;
@@ -36,5 +43,15 @@ public class ExercicioAplicacao {
     public String getDescricaoExercicioAplicacao()
     {
         return this.descricao;
+    }
+
+    public LocalDate getDataCriacao()
+    {
+        return this.data_criacao;
+    }
+
+    public LocalDate getDataModificacao()
+    {
+        return this.data_modificacao;
     }
 }

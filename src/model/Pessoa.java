@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 public class Pessoa {
     private long id;
     private String nome;
-    private char sexo;
+    private String sexo;
     private LocalDate nascimento;
     private String login;
     private String senha;
@@ -31,12 +31,17 @@ public class Pessoa {
     
     
     /* Funções de Set */
+    public void setId(Long id)
+    {
+        this.id = id;
+    }
+
     public void setNomePessoa(String nome_pessoa)
     {
         this.nome = nome_pessoa;
     }
     
-    public void setSexo(char sexo_pessoa)
+    public void setSexo(String sexo_pessoa)
     {
         this.sexo = sexo_pessoa;
     }
@@ -95,6 +100,16 @@ public class Pessoa {
     public String getNome()
     {
         return this.nome;
+    }
+
+    public String getSexo()
+    {
+        return this.sexo;
+    }
+
+    public LocalDate getNascimento()
+    {
+        return this.nascimento;
     }
 
     public String getLogin()

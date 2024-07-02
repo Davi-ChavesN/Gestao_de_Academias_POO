@@ -70,14 +70,63 @@ public class MovimentacaoFinanceiraDAO {
         return builder;
     }
 
-    public void updateMovimentacaoFinanceira()
+    public StringBuilder updateMovimentacaoFinanceira(Long id, String valor, String tipo, String descricao)
     {
+        StringBuilder builder = new StringBuilder("");
+        int i = 0;
+        while(movimentacaoFinanceira[i] != null && movimentacaoFinanceira[i].getIDMovimentacaoFinanceira() != id)
+        {
+            i++;
+        }
 
+        if(movimentacaoFinanceira[i] != null && movimentacaoFinanceira[i].getIDMovimentacaoFinanceira() == id)
+        {
+            if(!valor.equals(""))
+            {
+                movimentacaoFinanceira[i].setValorMovimentacaoFinanceiro(valor);
+            }
+
+            if(!tipo.equals(""))
+            {
+                movimentacaoFinanceira[i].setTipoMovimentacaoFinanceira(tipo);
+            }
+
+            if(!descricao.equals(""))
+            {
+                movimentacaoFinanceira[i].setDescricaoMovimentacaoFinanceira(descricao);
+            }
+
+            movimentacaoFinanceira[i].setModData();
+
+            builder.append("\nMensalidade Vigente atualizada com sucesso!");
+            return builder;
+        }
+
+        builder.append("\nMensalidade Vigente não foi atualizada!");
+        return builder;
     }
 
-    public void deleteMovimentacaoFinanceira()
+    public StringBuilder deleteMovimentacaoFinanceira(Long id)
     {
+        StringBuilder builder = new StringBuilder("");
+        int i = 0;
+        while(movimentacaoFinanceira[i] != null && movimentacaoFinanceira[i].getIDMovimentacaoFinanceira() != id)
+        {
+            i++;
+        }
 
+        if(i < movimentacaoFinanceira.length)
+        {
+            if(movimentacaoFinanceira[i].getIDMovimentacaoFinanceira() == id)
+            {
+                movimentacaoFinanceira[i] = null;
+                builder.append("\nMensalidade Vigente deletada com sucesso!");
+                return builder;
+            }
+        }
+
+        builder.append("\nMensalidade Vigente não encontrada!");
+        return builder;
     }
 
 }

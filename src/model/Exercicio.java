@@ -14,8 +14,14 @@ public class Exercicio {
     private String grupo_muscular;
     private LocalDate data_criacao;
     private LocalDate data_modificacao;
-    private static long serial = 0;
+    private static long serial_exercicio = 0;
 
+
+    /* Funções de Set */
+    public void setId(Long id)
+    {
+        this.id = id;
+    }
 
     public void setNomeExercicio(String nome)
     {
@@ -36,7 +42,7 @@ public class Exercicio {
     {
         this.data_criacao = LocalDate.now();
         this.data_modificacao = LocalDate.now();
-        this.id = ++Exercicio.serial;
+        this.id = ++Exercicio.serial_exercicio;
     }
 
     public void setModData()
@@ -45,6 +51,7 @@ public class Exercicio {
     }
 
 
+    /* Funções de Get */
     public long getIDExercicio()
     {
         return this.id;
@@ -63,5 +70,15 @@ public class Exercicio {
     public String getGrupoMuscular()
     {
         return this.grupo_muscular;
+    }
+
+    public LocalDate getDataCriacao()
+    {
+        return this.data_criacao;
+    }
+
+    public LocalDate getDataModificacao()
+    {
+        return this.data_modificacao;
     }
 }

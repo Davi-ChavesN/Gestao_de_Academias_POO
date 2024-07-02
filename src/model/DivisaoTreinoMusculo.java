@@ -8,10 +8,15 @@ public class DivisaoTreinoMusculo {
     private DivisaoTreino divisao_treino;
     private LocalDate data_criacao;
     private LocalDate data_modificacao;
-    private static long serial = 0;
+    private static long serial_divisao_treino_musculo = 0;
 
 
     /* Funções de Set */
+    public void setId(Long id)
+    {
+        this.id = id;
+    }
+
     public void setDescricaoDivisaoTreinoMusculo(String descricao)
     {
         this.descricao = descricao;
@@ -26,7 +31,7 @@ public class DivisaoTreinoMusculo {
     {
         this.data_criacao = LocalDate.now();
         this.data_modificacao = LocalDate.now();
-        this.id = ++DivisaoTreinoMusculo.serial;
+        this.id = ++DivisaoTreinoMusculo.serial_divisao_treino_musculo;
     }
 
     public void setModData()
@@ -49,5 +54,15 @@ public class DivisaoTreinoMusculo {
     public DivisaoTreino getDivisaoTreinoFromDivisaoTreinoMusculo()
     {
         return this.divisao_treino;
+    }
+
+    public LocalDate getDataCriacao()
+    {
+        return this.data_criacao;
+    }
+
+    public LocalDate getDataModificacao()
+    {
+        return this.data_modificacao;
     }
 }

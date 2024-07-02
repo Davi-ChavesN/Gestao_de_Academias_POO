@@ -1,6 +1,7 @@
 package model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class AvaliacaoFisica {
 
@@ -14,17 +15,24 @@ public class AvaliacaoFisica {
     private float result_rating;
     private LocalDate data_criacao;
     private LocalDate data_modificacao;
-    private static long serial = 0;
+    private static long serial_avaliacao_fisica = 0;
 
+
+    /* Funções de Set */
+    public void setId(Long id)
+    {
+        this.id = id;
+    }
 
     public void setPessoa(Pessoa p)
     {
         this.pessoa = p;
     }
 
-    public void setUltimoTreino(LocalDate data)
+    public void setUltimoTreino(String data)
     {
-        this.ultimo_treino = data;
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        this.ultimo_treino = LocalDate.parse(data, dtf);
     }
 
     public void setPeso(float peso)
@@ -56,7 +64,7 @@ public class AvaliacaoFisica {
     {
         this.data_criacao = LocalDate.now();
         this.data_modificacao = LocalDate.now();
-        this.id = ++AvaliacaoFisica.serial;
+        this.id = ++AvaliacaoFisica.serial_avaliacao_fisica;
     }
 
 

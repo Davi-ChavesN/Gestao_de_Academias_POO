@@ -73,8 +73,10 @@ public class ControllerMenuTreino {
                     else if(opc_crud == 3)//UPDATE
                     {
                         StringBuilder builder = gui.headerMenuUser(usuarioLogado);
+                        builder.append(divisaoTreinoDAO.readDivisaoTreino());
                         builder.append("\nInforme o ID da Divisão de Treino a ser atualizada");
                         long IDatt = Long.parseLong(JOptionPane.showInputDialog(builder));
+                        DivisaoTreino dt = divisaoTreinoDAO.buscaPorCriterioAlternativa1(IDatt);
 
                         builder = gui.headerMenuUser(usuarioLogado);
                         builder.append("\nInforme o novo nome da Divisão de Treino");
@@ -85,13 +87,14 @@ public class ControllerMenuTreino {
                         String descAtt = JOptionPane.showInputDialog(builder);
 
                         builder = gui.headerMenuUser(usuarioLogado);
-                        builder.append(divisaoTreinoDAO.updateDivisaoTreino(IDatt, nomeAtt, descAtt));
+                        builder.append(divisaoTreinoDAO.updateDivisaoTreino(dt, nomeAtt, descAtt));
 
                         JOptionPane.showMessageDialog(null, builder);
                     }
                     else if(opc_crud == 4)//DELETE
                     {
                         StringBuilder builder = gui.headerMenuUser(usuarioLogado);
+                        builder.append(divisaoTreinoDAO.readDivisaoTreino());
                         builder.append("\nInforme o ID da Divisão de Treino a ser deletada");
                         long IDdel = Long.parseLong(JOptionPane.showInputDialog(builder));
 
@@ -152,12 +155,13 @@ public class ControllerMenuTreino {
 
                         builder.append("\nInforme o ID do Treino-Musculo a ser atualizado");
                         Long idAtt = Long.parseLong(JOptionPane.showInputDialog(builder));
+                        DivisaoTreinoMusculo dtm = divisaoTreinoMusculoDAO.buscaPorCriterioAlternativa1(idAtt);
 
                         builder = gui.headerMenuUser(usuarioLogado);
                         builder.append("\nInforme a nova descrição");
                         String descAtt = JOptionPane.showInputDialog(builder);
 
-                        divisaoTreinoMusculoDAO.updateDivisaoTreinoMusculo(idAtt, descAtt);
+                        divisaoTreinoMusculoDAO.updateDivisaoTreinoMusculo(dtm, descAtt);
 
                         JOptionPane.showMessageDialog(null, builder);
                     }
@@ -237,6 +241,7 @@ public class ControllerMenuTreino {
 
                         builder.append("\nInforme o ID do Treino a ser atualizado");
                         Long idAtt = Long.parseLong(JOptionPane.showInputDialog(builder));
+                        Treino t = treinoDAO.buscaPorCriterioAlternativa1(idAtt);
 
                         builder = gui.headerMenuUser(usuarioLogado);
                         builder.append("\nInforme o novo objetivo do Treino");
@@ -251,7 +256,7 @@ public class ControllerMenuTreino {
                         String dt_termino = JOptionPane.showInputDialog(builder);
 
                         builder = gui.headerMenuUser(usuarioLogado);
-                        builder.append(treinoDAO.updateTreino(idAtt, objetivoAtt, dt_inicio, dt_termino));
+                        builder.append(treinoDAO.updateTreino(t, objetivoAtt, dt_inicio, dt_termino));
                         JOptionPane.showMessageDialog(null, builder);
                     }
                     else if(opc_crud == 4)//DELETE

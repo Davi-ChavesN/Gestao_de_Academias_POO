@@ -3,7 +3,9 @@ package model;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.text.NumberFormat;
 import java.time.LocalDate;
+import java.util.Locale;
 
 public class MovimentacaoFinanceira {
 
@@ -52,9 +54,15 @@ public class MovimentacaoFinanceira {
         return this.id;
     }
 
-    public BigDecimal getValorMovimentacaoFinanceiro()
+    public String getValorMovimentacaoFinanceiro()
     {
-        return this.valor;
+        Locale BRAZIL = new Locale("pt","BR");
+        NumberFormat n = NumberFormat.getCurrencyInstance(BRAZIL);
+
+        double doubleValor = this.valor .doubleValue();
+        String valorEscrito = n.format(doubleValor);
+
+        return valorEscrito;
     }
 
     public String getTipoMovimentacaoFinanceira()

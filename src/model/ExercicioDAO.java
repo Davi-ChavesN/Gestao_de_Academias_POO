@@ -1,5 +1,16 @@
 package model;
 
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+import data_base_connector.ConnectionFactory;
 
 /**
  *
@@ -264,31 +275,163 @@ public class ExercicioDAO {
         exercicio[33] = e;
     }
 
+    /* Uso do Banco */
+    public Exercicio adicionaExercicioBanco(Exercicio elemento) { //Criar entrada no Banco de Dados
+        String sql = "insert into exercicio "
+                + "(nome,descricao,grupo_muscular,data_criacao,data_modificacao)" 
+                + " values (?,?,?,?,?)";
+
+        try (Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            // seta os valores
+            stmt.setString(1, elemento.getNomeExercicio());
+            stmt.setString(2, elemento.getDescricao());
+            stmt.setString(3, elemento.getGrupoMuscular());
+            stmt.setDate(4, java.sql.Date.valueOf(elemento.getDataCriacao()));
+            stmt.setDate(5, java.sql.Date.valueOf(elemento.getDataModificacao()));
+            
+            stmt.execute();
+            
+            System.out.println("Elemento inserido com sucesso.");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //na verdade deveria retornar o elemento que foi inserido agora
+        return elemento;
+    }
+
+    public List<Exercicio> showExercicios(Exercicio elemento) {  //Adicionar todas linhas do Banco em uma Lista
+        String sql = "select * from exercicio";
+
+        DateFormat dtf = new SimpleDateFormat("dd/MM/yyyy");
+
+        List<Exercicio> exercicios = new ArrayList<>();
+
+        try (Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                Long id = rs.getLong("id");
+                String nome = rs.getString("nome");
+                String descricao = rs.getString("descricao");
+                String grupo_muscular = rs.getString("grupo_muscular");
+
+                Exercicio exercicio = new Exercicio();
+                exercicio.setId(id);
+                exercicio.setNomeExercicio(nome);
+                exercicio.setDescricaoExercicio(descricao);
+                exercicio.setGrupoMuscular(grupo_muscular);
+                
+                exercicios.add(exercicio);
+            }
+        } catch (SQLException e) {
+             throw new RuntimeException(e);
+        }
+
+        // itera no ResultSet
+        return exercicios;
+    }
+    
+    public Exercicio buscaPorCriterioAlternativa1(Long code) { /* Buscar um dado especifico no banco */
+        try (Connection connection = new ConnectionFactory().getConnection();
+            PreparedStatement ps = createPreparedStatement(connection, code);
+            ResultSet rs = ps.executeQuery()) {
+            
+            DateFormat dtf = new SimpleDateFormat("dd/MM/yyyy");
+            while (rs.next()) {
+                Long id = rs.getLong("id");
+                String nome = rs.getString("nome");
+                String descricao = rs.getString("descricao");
+                String grupo_muscular = rs.getString("grupo_muscular");
+
+                Exercicio exercicio = new Exercicio();
+                exercicio.setId(id);
+                exercicio.setNomeExercicio(nome);
+                exercicio.setDescricaoExercicio(descricao);
+                exercicio.setGrupoMuscular(grupo_muscular);
+                
+                return exercicio;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+    private PreparedStatement createPreparedStatement(Connection con, long id) throws SQLException {
+        String sql = "select * from exercicio where id = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setLong(1, id);
+        return ps;
+    }
+
+    public Exercicio updateExercicioBanco(Exercicio elemento) { //Update no Banco de Dados
+        String sql = "update exercicio set nome = ?, descricao = ?, grupo_muscular = ?, data_modificacao = ? where id = ?";
+
+        try (Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setString(1, elemento.getNomeExercicio());
+            stmt.setString(2, elemento.getDescricao());
+            stmt.setString(3, elemento.getGrupoMuscular());
+            stmt.setDate(4, java.sql.Date.valueOf(elemento.getDataModificacao()));
+            stmt.setLong(5, elemento.getIDExercicio());
+            
+            stmt.execute();
+            
+            System.out.println("Elemento alterado com sucesso.");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return elemento;
+    }
+
+    public Exercicio excluiExercicioBanco(Exercicio elemento) {// Exclusão no Banco de Dados
+        String sql = "delete from exercicio where id = ?";
+
+        try (Connection connection = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setLong(1, elemento.getIDExercicio());
+            
+            stmt.execute();
+            
+            System.out.println("Elemento excluído com sucesso.");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return elemento;
+    }
+
+    /*  */
     public StringBuilder adicionarExercicio(Exercicio e)
     {
         StringBuilder builder = new StringBuilder();
-        int i = 0;
-        while(exercicio[i] != null && i < exercicio.length-1)
-        {
-            i++;
-        }
+        // int i = 0;
+        // while(exercicio[i] != null && i < exercicio.length-1)
+        // {
+        //     i++;
+        // }
 
-        if(i < exercicio.length)
-        {
-            if(exercicio[i] == null)
-            {
-                exercicio[i] = e;
-                builder.append("Exercício adicionado com sucesso!");
-            }
-            else
-            {
-                builder.append("Não é possível adicionar mais exercícios!");
-            }
-        }
-        else
-        {
-            builder.append("Deu ruim");
-        }
+        // if(i < exercicio.length)
+        // {
+        //     if(exercicio[i] == null)
+        //     {
+        //         exercicio[i] = e;
+        //         builder.append("Exercício adicionado com sucesso!");
+        //     }
+        //     else
+        //     {
+        //         builder.append("Não é possível adicionar mais exercícios!");
+        //     }
+        // }
+        // else
+        // {
+        //     builder.append("Deu ruim");
+        // }
+
+        adicionaExercicioBanco(e);
+        builder.append("\nExercício adicionado com sucesso!");
 
         return builder;
     }
@@ -297,7 +440,8 @@ public class ExercicioDAO {
     {
         StringBuilder builder = new StringBuilder("\n");
         
-        for(Exercicio e : exercicio)
+        List<Exercicio> exercicios = showExercicios(null);
+        for(Exercicio e : exercicios)
         {
             if(e != null)
             {
@@ -310,14 +454,14 @@ public class ExercicioDAO {
         return builder;
     }
 
-    public StringBuilder editExercicio(int id_edit, long ID, String att)
+    public StringBuilder editExercicio(int id_edit, Exercicio e, String att)
     {
         StringBuilder builder = new StringBuilder();
         boolean atualizado = false;
-        for (Exercicio e : exercicio)
-        {
-            if(e != null && e.getIDExercicio() == ID)
-            {
+        // for (Exercicio e : exercicio)
+        // {
+        //     if(e != null && e.getIDExercicio() == ID)
+        //     {
                 if(id_edit == 1)
                 {
                     e.setNomeExercicio(att);
@@ -331,9 +475,10 @@ public class ExercicioDAO {
                     e.setGrupoMuscular(att);
                 }
                 e.setModData();
+                updateExercicioBanco(e);
                 atualizado = true;
-            }
-        }
+        //     }
+        // }
 
         if(atualizado == true)
         {
@@ -352,15 +497,18 @@ public class ExercicioDAO {
         StringBuilder builder = new StringBuilder();
         int i = 0;
         boolean deleted = false;
-        for (Exercicio e : exercicio)
-        {
-            if(e != null && e.getIDExercicio() == ID)
-            {
-                exercicio[i] = null;
-                deleted = true;
-            }
-            i++;
-        }
+        // for (Exercicio e : exercicio)
+        // {
+        //     if(e != null && e.getIDExercicio() == ID)
+        //     {
+        //         exercicio[i] = null;
+        //         deleted = true;
+        //     }
+        //     i++;
+        // }
+        Exercicio e = buscaPorCriterioAlternativa1(ID);
+        excluiExercicioBanco(e);
+        deleted = true;
 
         if(deleted == true)
         {

@@ -8,10 +8,15 @@ public class DivisaoTreino {
     private String descricao;
     private LocalDate data_criacao;
     private LocalDate data_modificacao;
-    private static long serial = 0;
+    private static long serial_divisao_treino = 0;
 
 
     /* Funções de Set */
+    public void setId(Long id)
+    {
+        this.id = id;
+    }
+
     public void setNomeDivisaoTreino(String nome)
     {
         this.nome = nome;
@@ -26,7 +31,7 @@ public class DivisaoTreino {
     {
         this.data_criacao = LocalDate.now();
         this.data_modificacao = LocalDate.now();
-        this.id = ++DivisaoTreino.serial;
+        this.id = ++DivisaoTreino.serial_divisao_treino;
     }
 
     public void setModData()
@@ -49,5 +54,15 @@ public class DivisaoTreino {
     public String getDescricaoDivisaoTreino()
     {
         return this.descricao;
+    }
+
+    public LocalDate getDataCriacao()
+    {
+        return this.data_criacao;
+    }
+
+    public LocalDate getDataModificacao()
+    {
+        return this.data_modificacao;
     }
 }

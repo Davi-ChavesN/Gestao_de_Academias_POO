@@ -15,6 +15,11 @@ public class Treino {
 
 
     /* Funções de Set */
+    public void setId(Long id)
+    {
+        this.id = id;
+    }
+
     public void setObjetivoTreino(String objetivo)
     {
         this.objetivo = objetivo;
@@ -74,5 +79,15 @@ public class Treino {
     public DivisaoTreino getDivisaoTreinoFromTreino()
     {
         return this.divisao_treino;
+    }
+    
+    public LocalDate getDataCriacao()
+    {
+        return this.data_criacao;
+    }
+
+    public LocalDate getDataModificacao()
+    {
+        return this.data_modificacao;
     }
 }

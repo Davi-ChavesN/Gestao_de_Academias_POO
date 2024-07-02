@@ -4,6 +4,7 @@ package controller;
 import javax.swing.JOptionPane;
 
 import model.Exercicio;
+import model.ExercicioAplicacao;
 import model.ExercicioDAO;
 import model.ExercicioAplicacaoDAO;
 import model.Pessoa;
@@ -65,57 +66,69 @@ public class ControllerMenuExercicio {
                     else if(opc_crud == 3)//Atualizar Exercicio
                     {
                         builder = gui.headerMenuUser(usuarioLogado);
+                        builder.append(exercicioDAO.mostrarExercicios(usuarioLogado));
                         builder.append("\nInforme o ID do exercício a ser editado");
-                        long id_edit = Long.parseLong(JOptionPane.showInputDialog(builder));
 
-                        builder = gui.headerMenuUser(usuarioLogado);
-                        builder.append("\n--- Editar Exercício ---\n");
-                        builder.append("\n1. Editar nome");
-                        builder.append("\n2. Editar descrição");
-                        builder.append("\n3. Editar grupo muscular");
-                        builder.append("\n0. Sair");
-
-                        int opc_edit = 0;
-                        while(opc_edit != -1)
+                        try
                         {
-                            opc_edit = Integer.parseInt(JOptionPane.showInputDialog(builder));
-                            StringBuilder editValue = gui.headerMenuUser(usuarioLogado);
+                            long id_edit = Long.parseLong(JOptionPane.showInputDialog(builder));
+                            Exercicio updateExercicio = exercicioDAO.buscaPorCriterioAlternativa1(id_edit);
+                        
 
-                            if (opc_edit == 1)//Editar nome do exercício
+                            builder = gui.headerMenuUser(usuarioLogado);
+                            builder.append("\n--- Editar Exercício ---\n");
+                            builder.append("\n1. Editar nome");
+                            builder.append("\n2. Editar descrição");
+                            builder.append("\n3. Editar grupo muscular");
+                            builder.append("\n0. Sair");
+
+                            int opc_edit = 0;
+                            while(opc_edit != -1)
                             {
-                                editValue.append("\nInforme o novo nome!");
-                                String novo_nome = JOptionPane.showInputDialog(editValue);
-                                editValue = gui.headerMenuUser(usuarioLogado);
-                                editValue.append(exercicioDAO.editExercicio(opc_edit, id_edit, novo_nome));
+                                opc_edit = Integer.parseInt(JOptionPane.showInputDialog(builder));
+                                StringBuilder editValue = gui.headerMenuUser(usuarioLogado);
+
+                                if (opc_edit == 1)//Editar nome do exercício
+                                {
+                                    editValue.append("\nInforme o novo nome!");
+                                    String novo_nome = JOptionPane.showInputDialog(editValue);
+                                    editValue = gui.headerMenuUser(usuarioLogado);
+                                    editValue.append(exercicioDAO.editExercicio(opc_edit, updateExercicio, novo_nome));
+                                }
+                                else if(opc_edit == 2)//Editar descrição do exercício
+                                {
+                                    editValue.append("\nInforme a nova descição!");
+                                    String nova_descricao = JOptionPane.showInputDialog(editValue);
+                                    editValue = gui.headerMenuUser(usuarioLogado);
+                                    editValue.append(exercicioDAO.editExercicio(opc_edit, updateExercicio, nova_descricao));
+                                }
+                                else if(opc_edit == 3)//Editar grupo muscular do exercício
+                                {
+                                    editValue.append("\nInforme o grupo muscular!");
+                                    String novo_grupo_muscular = JOptionPane.showInputDialog(editValue);
+                                    editValue = gui.headerMenuUser(usuarioLogado);
+                                    editValue.append(exercicioDAO.editExercicio(opc_edit, updateExercicio, novo_grupo_muscular));
+                                }
+                                else if(opc_edit == 0)
+                                {
+                                    opc_edit = -1;
+                                }
+                                else
+                                {
+                                    opc_edit = 0;
+                                }
                             }
-                            else if(opc_edit == 2)//Editar descrição do exercício
-                            {
-                                editValue.append("\nInforme a nova descição!");
-                                String nova_descricao = JOptionPane.showInputDialog(editValue);
-                                editValue = gui.headerMenuUser(usuarioLogado);
-                                editValue.append(exercicioDAO.editExercicio(opc_edit, id_edit, nova_descricao));
-                            }
-                            else if(opc_edit == 3)//Editar grupo muscular do exercício
-                            {
-                                editValue.append("\nInforme o grupo muscular!");
-                                String novo_grupo_muscular = JOptionPane.showInputDialog(editValue);
-                                editValue = gui.headerMenuUser(usuarioLogado);
-                                editValue.append(exercicioDAO.editExercicio(opc_edit, id_edit, novo_grupo_muscular));
-                            }
-                            else if(opc_edit == 0)
-                            {
-                                opc_edit = -1;
-                            }
-                            else
-                            {
-                                opc_edit = 0;
-                            }
+                        }
+                        catch (NumberFormatException e) 
+                        {
+                            JOptionPane.showMessageDialog(null, "O ID informado não é um número válido.");
                         }
                     }
                     else if(opc_crud == 4)//Deletar Exercicio
                     {
                         builder = gui.headerMenuUser(usuarioLogado);
                         builder.append("\n--- Deletar Exercício ---\n");
+                        builder.append(exercicioDAO.mostrarExercicios(usuarioLogado));
                         builder.append("\nInforme o ID do exercício a ser deletado");
                         long IDdel = Long.parseLong(JOptionPane.showInputDialog(builder));
                         builder = gui.headerMenuUser(usuarioLogado);
@@ -160,21 +173,33 @@ public class ControllerMenuExercicio {
                     else if(opc_crud == 3)//UPDATE
                     {
                         StringBuilder builder = gui.headerMenuUser(usuarioLogado);
+                        builder.append(exercicioAplicacaoDAO.readExercicioAplicacao());
                         builder.append("\nInforme o ID da Aplicação de Exercicio a ser atualizada");
-                        long IDatt = Long.parseLong(JOptionPane.showInputDialog(builder));
+                        
+                        try
+                        {
+                            Long IDatt = Long.parseLong(JOptionPane.showInputDialog(builder));
+                            ExercicioAplicacao updateEA = exercicioAplicacaoDAO.buscaPorCriterioAlternativa1(IDatt);
 
-                        builder = gui.headerMenuUser(usuarioLogado);
-                        builder.append("\nInforme a nova descrição da Aplicação de Exercicio");
-                        String descAtt = JOptionPane.showInputDialog(builder);
+                            builder = gui.headerMenuUser(usuarioLogado);
+                            builder.append("\nInforme a nova descrição da Aplicação de Exercicio");
+                            String descAtt = JOptionPane.showInputDialog(builder);
+                            updateEA.setDescricaoExercicioAplicacao(descAtt);
 
-                        builder = gui.headerMenuUser(usuarioLogado);
-                        builder.append(exercicioAplicacaoDAO.updateExercicioAplicacao(IDatt, descAtt));
+                            builder = gui.headerMenuUser(usuarioLogado);
+                            builder.append(exercicioAplicacaoDAO.updateExercicioAplicacao(IDatt, updateEA));
+                        }
+                        catch (NumberFormatException e) 
+                        {
+                            JOptionPane.showMessageDialog(null, "O ID informado não é um número válido.");
+                        }                        
 
                         JOptionPane.showMessageDialog(null, builder);
                     }
                     else if(opc_crud == 4)//DELETE
                     {
                         StringBuilder builder = gui.headerMenuUser(usuarioLogado);
+                        builder.append(exercicioAplicacaoDAO.readExercicioAplicacao());
                         builder.append("\nInforme o ID da Aplicação de Exercício a ser deletada");
                         long IDdel = Long.parseLong(JOptionPane.showInputDialog(builder));
 
