@@ -3,9 +3,11 @@ package controller;
 
 import javax.swing.JOptionPane;
 
+import model.AlunoPagamentoMensalidade;
 import model.AlunoPagamentoMensalidadeDAO;
 import model.MensalidadeVigente;
 import model.MensalidadeVigenteDAO;
+import model.PagamentoRecorrente;
 import model.PagamentoRecorrenteDAO;
 import model.Pessoa;
 import model.PessoaDAO;
@@ -29,7 +31,7 @@ public class ControllerMenuMensalidade {
         {
             opc_menu_mensalidade = gui.menuFinanceiro(usuarioLogado);
 
-            if(opc_menu_mensalidade == 1)//CRUD Exercicio
+            if(opc_menu_mensalidade == 1)//CRUD Mensalidade Vigente
             {
                 opc_crud = 0;
 
@@ -66,8 +68,10 @@ public class ControllerMenuMensalidade {
                     else if(opc_crud == 3)//UPDATE
                     {
                         StringBuilder builder = gui.headerMenuUser(usuarioLogado);
+                        builder.append(mensalidadeVigenteDAO.readMensalidadeVigente());
                         builder.append("\nInforme o ID da Mensalidade Vigente a ser atualizada");
                         long IDatt = Long.parseLong(JOptionPane.showInputDialog(builder));
+                        MensalidadeVigente mv = mensalidadeVigenteDAO.buscaPorCriterioAlternativa1(IDatt);
 
                         builder = gui.headerMenuUser(usuarioLogado);
                         builder.append("\nInforme o novo valor da Mensalidade Vigente");
@@ -82,13 +86,14 @@ public class ControllerMenuMensalidade {
                         String terminoAtt = JOptionPane.showInputDialog(builder);
 
                         builder = gui.headerMenuUser(usuarioLogado);
-                        builder.append(mensalidadeVigenteDAO.updateMensalidadeVigente(IDatt, valorAtt, inicioAtt, terminoAtt));
+                        builder.append(mensalidadeVigenteDAO.updateMensalidadeVigente(mv, valorAtt, inicioAtt, terminoAtt));
 
                         JOptionPane.showMessageDialog(null, builder);
                     }
                     else if(opc_crud == 4)//DELETE
                     {
                         StringBuilder builder = gui.headerMenuUser(usuarioLogado);
+                        builder.append(mensalidadeVigenteDAO.readMensalidadeVigente());
                         builder.append("\nInforme o ID da Mensalidade Vigente a ser deletada");
                         long IDdel = Long.parseLong(JOptionPane.showInputDialog(builder));
 
@@ -107,7 +112,7 @@ public class ControllerMenuMensalidade {
                     }
                 }
             }
-            else if(opc_menu_mensalidade == 2)
+            else if(opc_menu_mensalidade == 2)//CRUD Pagamento Mensalidade Aluno
             {
                 opc_crud = 0;
 
@@ -122,7 +127,7 @@ public class ControllerMenuMensalidade {
                         builder.append("\nInforme o ID da Mensalidade Vigente a ser utilizada");
                         Long idMv = Long.parseLong(JOptionPane.showInputDialog(builder));
 
-                        MensalidadeVigente mv = mensalidadeVigenteDAO.getMensalidadeVigente(idMv);
+                        MensalidadeVigente mv = mensalidadeVigenteDAO.buscaPorCriterioAlternativa1(idMv);
 
                         builder = gui.headerMenuUser(usuarioLogado);
                         builder.append("\nInforme a data de vencimento do Pagamento de Mensalidade do Aluno dd/mm/yyyy");
@@ -141,7 +146,7 @@ public class ControllerMenuMensalidade {
                         builder.append("\nInforme o ID da pessoa a ser utilizada");
                         Long idP = Long.parseLong(JOptionPane.showInputDialog(builder));
 
-                        Pessoa p = pessoaDAO.pegaUsuario(idP);
+                        Pessoa p = pessoaDAO.buscaPorCriterioAlternativa1(idP);
 
                         builder = gui.headerMenuUser(usuarioLogado);
                         builder.append("\nInforme a modalidade de pagamento");
@@ -166,8 +171,10 @@ public class ControllerMenuMensalidade {
                     else if(opc_crud == 3)//UPDATE
                     {
                         StringBuilder builder = gui.headerMenuUser(usuarioLogado);
+                        builder.append(alunoPagamentoMensalidadeDAO.readAlunoPagamentoMensalidade());
                         builder.append("\nInforme o ID do Pagamento de Mensalidade a ser atualizada");
                         long IDatt = Long.parseLong(JOptionPane.showInputDialog(builder));
+                        AlunoPagamentoMensalidade apm = alunoPagamentoMensalidadeDAO.buscaPorCriterioAlternativa1(IDatt);
 
                         builder = gui.headerMenuUser(usuarioLogado);
                         builder.append("\nInforme a nova data de vencimento dd/mm/yyyy");
@@ -182,17 +189,29 @@ public class ControllerMenuMensalidade {
                         String valor_pago = JOptionPane.showInputDialog(builder);
 
                         builder = gui.headerMenuUser(usuarioLogado);
-                        builder.append("\nInforme o valor pago");
-                        int modalidade = Integer.parseInt(JOptionPane.showInputDialog(builder));
+                        builder.append("\nInforme a modalidade de pagamento");
+                        builder.append("\n1. Dinheiro");
+                        builder.append("\n2. Pix");
+                        builder.append("\n3. Débito automático");
+                        builder.append("\n4. Pagamento recorrente");
+                        int modalidade;
+                        try{
+                            modalidade = Integer.parseInt(JOptionPane.showInputDialog(builder));
+                        }
+                        catch(java.lang.NumberFormatException e){
+                            modalidade = 0;
+                        }
+                        
 
                         builder = gui.headerMenuUser(usuarioLogado);
-                        builder.append(alunoPagamentoMensalidadeDAO.updateAlunoPagamentoMensalidade(IDatt, dt_vencimento, dt_pagamento, valor_pago, modalidade));
+                        builder.append(alunoPagamentoMensalidadeDAO.updateAlunoPagamentoMensalidade(apm, dt_vencimento, dt_pagamento, valor_pago, modalidade));
 
                         JOptionPane.showMessageDialog(null, builder);
                     }
                     else if(opc_crud == 4)//DELETE
                     {
                         StringBuilder builder = gui.headerMenuUser(usuarioLogado);
+                        builder.append(alunoPagamentoMensalidadeDAO.readAlunoPagamentoMensalidade());
                         builder.append("\nInforme o ID do Pagamento de Mensalidade a ser deletado");
                         long IDdel = Long.parseLong(JOptionPane.showInputDialog(builder));
 
@@ -211,7 +230,7 @@ public class ControllerMenuMensalidade {
                     }
                 }
             }
-            else if(opc_menu_mensalidade == 3)
+            else if(opc_menu_mensalidade == 3)//CRUD Pagamento Recorrente
             {
                 opc_crud = 0;
 
@@ -226,7 +245,7 @@ public class ControllerMenuMensalidade {
                         builder.append("\nInforme o ID da pessoa a ser utilizada");
                         Long idP = Long.parseLong(JOptionPane.showInputDialog(builder));
 
-                        Pessoa p = pessoaDAO.pegaUsuario(idP);
+                        Pessoa p = pessoaDAO.buscaPorCriterioAlternativa1(idP);
 
                         builder = gui.headerMenuUser(usuarioLogado);
                         builder.append("\nInforme o cartão a ser utilizado para o Pagamento Recorrente");
@@ -259,8 +278,10 @@ public class ControllerMenuMensalidade {
                     else if(opc_crud == 3)//UPDATE
                     {
                         StringBuilder builder = gui.headerMenuUser(usuarioLogado);
+                        builder.append(pagamentoRecorrenteDAO.readPagamentoRecorrente());
                         builder.append("\nInforme o ID do Pagamento Recorrente a ser atualizado");
                         long IDatt = Long.parseLong(JOptionPane.showInputDialog(builder));
+                        PagamentoRecorrente pr = pagamentoRecorrenteDAO.buscaPorCriterioAlternativa1(IDatt);
 
                         builder = gui.headerMenuUser(usuarioLogado);
                         builder.append("\nInforme o novo valor do Pagamento Recorrente");
@@ -272,16 +293,23 @@ public class ControllerMenuMensalidade {
 
                         builder = gui.headerMenuUser(usuarioLogado);
                         builder.append("\nInforme a quantidade de meses autorizados para o Pagamento Recorrente");
-                        int meses_aut = Integer.parseInt(JOptionPane.showInputDialog(builder));
+                        int meses_aut;
+                        try{
+                            meses_aut = Integer.parseInt(JOptionPane.showInputDialog(builder));
+                        }catch(java.lang.NumberFormatException e){
+                            meses_aut = pr.getMesesAutPagamentoRecorrente();
+                        }
+                        
 
                         builder = gui.headerMenuUser(usuarioLogado);
-                        builder.append(pagamentoRecorrenteDAO.updatePagamentoRecorrente(IDatt, valor, dt_inicio, meses_aut));
+                        builder.append(pagamentoRecorrenteDAO.updatePagamentoRecorrente(pr, valor, dt_inicio, meses_aut));
 
                         JOptionPane.showMessageDialog(null, builder);
                     }
                     else if(opc_crud == 4)//DELETE
                     {
                         StringBuilder builder = gui.headerMenuUser(usuarioLogado);
+                        builder.append(pagamentoRecorrenteDAO.readPagamentoRecorrente());
                         builder.append("\nInforme o ID do Pagamento Recorrente a ser deletado");
                         long IDdel = Long.parseLong(JOptionPane.showInputDialog(builder));
 

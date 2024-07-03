@@ -12,13 +12,13 @@ public class AlunoPagamentoMensalidade {
     private MensalidadeVigente mensalidadeVigente;
     private LocalDate data_vencimento;
     private LocalDate data_pagamento;
-    private BigDecimal valor_pago = new BigDecimal(0);
+    private BigDecimal valor_pago = new BigDecimal("0");
     private LocalDate data;
     private Pessoa pessoa;
     private String modalidade;
     private LocalDate data_criacao;
     private LocalDate data_modificacao;
-    private static long serial = 0;
+    private static long serialPagamentoMensalidade = 0;
 
     MathContext context = new MathContext(2, RoundingMode.FLOOR);
 
@@ -30,6 +30,11 @@ public class AlunoPagamentoMensalidade {
 
 
     /* Funções de Set */
+    public void setId(Long id)
+    {
+        this.id = id;
+    }
+
     public void setMensalidadeVigenteIntoAlunoPagamentoMensalidade(MensalidadeVigente mv)
     {
         this.mensalidadeVigente = mv;
@@ -44,12 +49,17 @@ public class AlunoPagamentoMensalidade {
     public void setDataPagamento(String data_pagamento)
     {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        this.data_vencimento = LocalDate.parse(data_pagamento, dtf);
+        this.data_pagamento = LocalDate.parse(data_pagamento, dtf);
     }
 
     public void setData()
     {
         this.data = LocalDate.now();
+    }
+    public void setDataFromBanco(String data)
+    {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        this.data = LocalDate.parse(data, dtf);
     }
 
     public void setPessoaIntoAlunoPagamentoMensalidade(Pessoa p)
@@ -86,7 +96,7 @@ public class AlunoPagamentoMensalidade {
     {
         this.data_criacao = LocalDate.now();
         this.data_modificacao = LocalDate.now();
-        this.id = ++AlunoPagamentoMensalidade.serial;
+        this.id = ++AlunoPagamentoMensalidade.serialPagamentoMensalidade;
     }
 
     public void setModData()
@@ -134,6 +144,16 @@ public class AlunoPagamentoMensalidade {
     public String getModalidadeAlunoPagamentoMensalidade()
     {
         return this.modalidade;
+    }
+
+    public LocalDate getDataCriacao()
+    {
+        return this.data_criacao;
+    }
+
+    public LocalDate getDataModificacao()
+    {
+        return this.data_modificacao;
     }
 
 }

@@ -340,4 +340,15 @@ public class GUI {
 
         return Integer.parseInt(JOptionPane.showInputDialog(menuBuilder));
     }
+
+    public int crudRelatorios(Pessoa usuario)
+    {
+        StringBuilder menuBuilder = headerMenuUser(usuario);
+
+        menuBuilder.append("\n1. Ficha de Treino(PDF)");
+        menuBuilder.append("\n2. Relatorio Financeiro(PDF)");
+        menuBuilder.append("\n0. Voltar");
+
+        return Integer.parseInt(JOptionPane.showInputDialog(menuBuilder));
+    }
 }

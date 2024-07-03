@@ -1,6 +1,9 @@
 package controller;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JOptionPane;
 
 import model.Pessoa;
@@ -295,70 +298,79 @@ public class ControllerMenuTreino {
                         builder.append(treinoDAO.readTreino());
                         builder.append("\nInforme qual Treino irá usar");
 
-                        Treino t = new Treino();
-                        t = null;
+                        Treino t = null;
                         while(t == null)
                         {
                             Long id = Long.parseLong(JOptionPane.showInputDialog(builder));
-                            t = treinoDAO.getTreino(id);
+                            t = treinoDAO.buscaPorCriterioAlternativa1(id);
                         }
 
+                        List<Exercicio> exercicios = new ArrayList<>();
+                        List<ExercicioAplicacao> exerciciosAplicacoes = new ArrayList<>();
 
-                        builder = gui.headerMenuUser(usuarioLogado);
-                        builder.append(exercicioDAO.mostrarExercicios(usuarioLogado));
-                        builder.append("\nInforme qual Exercicio irá usar");
-
-                        Exercicio e = new Exercicio();
-                        e = null;
-                        while(e == null)
+                        int adicionarMaisExercicio = JOptionPane.YES_OPTION;
+                        while(adicionarMaisExercicio == JOptionPane.YES_OPTION)
                         {
-                            Long id = Long.parseLong(JOptionPane.showInputDialog(builder));
-                            e = exercicioDAO.getExercicio(id);
+                            builder = gui.headerMenuUser(usuarioLogado);
+                            builder.append(exercicioDAO.mostrarExercicios(usuarioLogado));
+                            builder.append("\nInforme qual Exercicio irá usar");
+
+                            Exercicio e = null;
+                            while(e == null)
+                            {
+                                Long id = Long.parseLong(JOptionPane.showInputDialog(builder));
+                                e = exercicioDAO.buscaPorCriterioAlternativa1(id);
+                            }
+                            exercicios.add(e);
+
+                            builder = gui.headerMenuUser(usuarioLogado);
+                            builder.append(exercicioAplicacaoDAO.readExercicioAplicacao());
+                            builder.append("\nInforme qual Aplicação de Exercicio irá usar");
+
+                            ExercicioAplicacao ea = null;
+                            while(ea == null)
+                            {
+                                Long id = Long.parseLong(JOptionPane.showInputDialog(builder));
+                                ea = exercicioAplicacaoDAO.buscaPorCriterioAlternativa1(id);
+                            }
+                            exerciciosAplicacoes.add(ea);
+
+                            adicionarMaisExercicio = JOptionPane.showConfirmDialog(null, "Deseja adicionar mais um exercício?");
                         }
-
-
-                        builder = gui.headerMenuUser(usuarioLogado);
-                        builder.append(exercicioAplicacaoDAO.readExercicioAplicacao());
-                        builder.append("\nInforme qual Aplicação de Exercicio irá usar");
-
-                        ExercicioAplicacao ea = new ExercicioAplicacao();
-                        ea = null;
-                        while(ea == null)
-                        {
-                            Long id = Long.parseLong(JOptionPane.showInputDialog(builder));
-                            ea = exercicioAplicacaoDAO.getExercicioAplicacao(id);
-                        }
-
 
                         builder = gui.headerMenuUser(usuarioLogado);
                         builder.append(divisaoTreinoDAO.readDivisaoTreino());
                         builder.append("\nInforme qual Divisão de Treino irá usar");
 
-                        DivisaoTreino dt = new DivisaoTreino();
-                        dt = null;
+                        DivisaoTreino dt = null;
                         while(dt == null)
                         {
                             Long id = Long.parseLong(JOptionPane.showInputDialog(builder));
-                            dt = divisaoTreinoDAO.getDivisaoTreino(id);
+                            dt = divisaoTreinoDAO.buscaPorCriterioAlternativa1(id);
                         }
 
-
+                        List<DivisaoTreinoMusculo> divisoesMusculo = new ArrayList<>();
                         builder = gui.headerMenuUser(usuarioLogado);
                         builder.append(divisaoTreinoMusculoDAO.readDivisaoTreinoMusculo());
-                        builder.append("\nInforme qual Divisão de Treino-Musculo irá usar");
+                        builder.append("\nInforme quais Divisões de Treino-Musculo irá usar");
 
-                        DivisaoTreinoMusculo dtm = new DivisaoTreinoMusculo();
-                        dtm = null;
+                        DivisaoTreinoMusculo dtm = null;
                         while(dtm == null)
                         {
                             Long id = Long.parseLong(JOptionPane.showInputDialog(builder));
-                            dtm = divisaoTreinoMusculoDAO.getDivisaoTreinoMusculo(id);
+                            dtm = divisaoTreinoMusculoDAO.buscaPorCriterioAlternativa1(id);
+                            if (dtm != null) {
+                                divisoesMusculo.add(dtm);
+                            }
+                            int adicionarMaisDivisaoMusculo = JOptionPane.showConfirmDialog(null, "Deseja adicionar mais uma Divisão de Treino-Musculo?");
+                            if (adicionarMaisDivisaoMusculo != JOptionPane.YES_OPTION) {
+                                break;
+                            }
                         }
 
-
                         builder = gui.headerMenuUser(usuarioLogado);
-                        builder.append(treinoAplicacaoDAO.createTreinoAplicacao(t, e, ea, dt, dtm));
-                        
+                        builder.append(treinoAplicacaoDAO.createTreinoAplicacao(t, exercicios, exerciciosAplicacoes, dt, divisoesMusculo));
+
                         JOptionPane.showMessageDialog(null, builder);
                     }
                     else if(opc_crud == 2)//READ

@@ -20,6 +20,11 @@ public class MovimentacaoFinanceira {
     MathContext context = new MathContext(2, RoundingMode.FLOOR);
 
     /* Funções de set */
+    public void setId(Long id)
+    {
+        this.id = id;
+    }
+    
     public void setValorMovimentacaoFinanceiro(String valor)
     {
         this.valor = new BigDecimal(valor, context);
@@ -63,6 +68,10 @@ public class MovimentacaoFinanceira {
         String valorEscrito = n.format(doubleValor);
 
         return valorEscrito;
+    }
+    public BigDecimal getValorMovimentacaoFinanceiroBigD()
+    {
+        return this.valor;
     }
 
     public String getTipoMovimentacaoFinanceira()

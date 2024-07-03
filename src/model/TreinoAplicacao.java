@@ -15,6 +15,11 @@ public class TreinoAplicacao {
 
 
     /* Funções de Set */
+    public void setId(Long id)
+    {
+        this.id = id;
+    }
+    
     public void setTreinoIntoTreinoAplicacao(Treino treino)
     {
         this.treino = treino;
@@ -82,5 +87,15 @@ public class TreinoAplicacao {
     public DivisaoTreinoMusculo getDivisaoTreinoMusculoFromTreinoAplicacao()
     {
         return this.divisao_treino_musculo;
+    }
+
+    public LocalDate getDataCriacao()
+    {
+        return this.data_criacao;
+    }
+
+    public LocalDate getDataModificacao()
+    {
+        return this.data_modificacao;
     }
 }

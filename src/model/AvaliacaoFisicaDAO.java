@@ -298,7 +298,6 @@ public class AvaliacaoFisicaDAO {
         //         return null;
         //     }
         // }       
-        adicionaAvaliacaoFisicaBanco(af);
 
         return af;
     }
@@ -321,7 +320,7 @@ public class AvaliacaoFisicaDAO {
     public void notaAvaliacaoFisica(AvaliacaoFisica af, float nota)
     {
         af.setResultRating(nota);
-        updateAvalicaoFisicaBanco(af);
+        adicionaAvaliacaoFisicaBanco(af);
     }
 
 }

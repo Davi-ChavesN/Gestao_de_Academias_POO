@@ -14,11 +14,16 @@ public class MensalidadeVigente {
     private LocalDate termino;
     private LocalDate data_criacao;
     private LocalDate data_modificacao;
-    private static long serial = 0;
+    private static long serial_mensalidade_vigente = 0;
 
     MathContext context = new MathContext(2, RoundingMode.FLOOR);
 
     /* Funções de Set */
+    public void setId(Long id)
+    {
+        this.id = id;
+    }
+
     public void setValor(String valor)
     {
         this.valor = new BigDecimal(valor, context);
@@ -40,7 +45,7 @@ public class MensalidadeVigente {
     {
         this.data_criacao = LocalDate.now();
         this.data_modificacao = LocalDate.now();
-        this.id = ++MensalidadeVigente.serial;
+        this.id = ++MensalidadeVigente.serial_mensalidade_vigente;
     }
 
     public void setModData()

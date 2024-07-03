@@ -31,6 +31,7 @@ public class TrabalhoPOOGestaoAcademia {
         ControllerMenuAvaliacaoFisica controllerMenuAvaliacaoFisica = new ControllerMenuAvaliacaoFisica();
         ControllerMenuMensalidade controllerMenuMensalidade = new ControllerMenuMensalidade();
         ControllerMenuMovimentacaoFinanceira controllerMenuMovimentacaoFinanceira = new ControllerMenuMovimentacaoFinanceira();
+        ControllerMenuRelatorio controllerMenuRelatorio = new ControllerMenuRelatorio();
 
         Pessoa usuarioLogado = new Pessoa();
 
@@ -88,6 +89,10 @@ public class TrabalhoPOOGestaoAcademia {
                                     controllerMenuMovimentacaoFinanceira.menuMovimentacaoFinanceira(usuarioLogado);
                                     break;
 
+                                case 8: //Relatórios
+                                    controllerMenuRelatorio.menuRelatorios(usuarioLogado);
+                                    break;
+
                                 case 0:
                                     opc_menu_usuario = -1;
                                     break;
@@ -104,7 +109,23 @@ public class TrabalhoPOOGestaoAcademia {
                             switch (opc_menu_usuario)
                             {
                                 case 1:
-                                    
+                                    controllerMenuPessoa.menuPessoa(usuarioLogado);
+                                    break;
+
+                                case 2: //Menu de Exercícios
+                                    controllerMenuExercicio.menuExercicio(usuarioLogado);
+                                    break;
+
+                                case 3: //Menu de Treino
+                                    controllerMenuTreino.menuTreino(usuarioLogado);
+                                    break;
+
+                                case 4: //Menu de Avaliação Física
+                                    controllerMenuAvaliacaoFisica.menuAvaliacaoFisica(usuarioLogado);
+                                    break;
+
+                                case 5: //Menu de Mensalidade
+                                    controllerMenuMensalidade.menuMensalidade(usuarioLogado);
                                     break;
 
                                 case 0:
@@ -124,6 +145,10 @@ public class TrabalhoPOOGestaoAcademia {
                             {
                                 case 1:
                                     
+                                    break;
+
+                                case 2:
+                                    controllerMenuAvaliacaoFisica.menuAvaliacaoFisica(usuarioLogado);
                                     break;
 
                                 case 0:

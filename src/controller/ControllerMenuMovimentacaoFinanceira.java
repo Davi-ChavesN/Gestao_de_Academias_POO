@@ -2,6 +2,7 @@ package controller;
 
 import javax.swing.JOptionPane;
 
+import model.MovimentacaoFinanceira;
 import model.MovimentacaoFinanceiraDAO;
 import model.Pessoa;
 import view.GUI;
@@ -10,6 +11,11 @@ public class ControllerMenuMovimentacaoFinanceira {
 
     GUI gui = new GUI();
     MovimentacaoFinanceiraDAO movimentacaoFinanceiraDAO = new MovimentacaoFinanceiraDAO();
+
+    public MovimentacaoFinanceiraDAO pegaMovDAO()
+    {
+        return this.movimentacaoFinanceiraDAO;
+    }
 
     public void menuMovimentacaoFinanceira(Pessoa usuarioLogado)
     {
@@ -48,8 +54,10 @@ public class ControllerMenuMovimentacaoFinanceira {
 
                 case 3: //update
                     builder = gui.headerMenuUser(usuarioLogado);
+                    builder.append(movimentacaoFinanceiraDAO.readMovimentacaoFinanceira());
                     builder.append("\nInforme o ID da Movimentação Financeira a ser atualizada");
                     long IDatt = Long.parseLong(JOptionPane.showInputDialog(builder));
+                    MovimentacaoFinanceira mf = movimentacaoFinanceiraDAO.buscaPorCriterioAlternativa1(IDatt);
 
                     builder = gui.headerMenuUser(usuarioLogado);
                     builder.append("\nInforme o novo valor da Movimentação Financeira");
@@ -57,29 +65,38 @@ public class ControllerMenuMovimentacaoFinanceira {
 
                     builder = gui.headerMenuUser(usuarioLogado);
                     builder.append("\nInforme o tipo da Movimentação Financeira");
-                    int MF = Integer.parseInt(JOptionPane.showInputDialog(builder));
+                    builder.append("\n1. Entrada");
+                    builder.append("\n2. Saída");
+                    int MF;
                     String tipoAtt = "";
-                    if(MF == 1)
-                    {
-                        tipoAtt = "Entrada";
+                    try{
+                        MF = Integer.parseInt(JOptionPane.showInputDialog(builder));
+                        if(MF == 1)
+                        {
+                            tipoAtt = "Entrada";
+                        }
+                        else if(MF == 2)
+                        {
+                            tipoAtt = "Saida";
+                        }
+                    }catch(java.lang.NumberFormatException e){
+                        tipoAtt = mf.getTipoMovimentacaoFinanceira();
                     }
-                    else if(MF == 2)
-                    {
-                        tipoAtt = "Saida";
-                    }
+                    
 
                     builder = gui.headerMenuUser(usuarioLogado);
                     builder.append("\nInforme a descrição da Movimentação Financeira");
                     String descricaoAtt = JOptionPane.showInputDialog(builder);
 
                     builder = gui.headerMenuUser(usuarioLogado);
-                    builder.append(movimentacaoFinanceiraDAO.updateMovimentacaoFinanceira(IDatt, valorAtt, tipoAtt, descricaoAtt));
+                    builder.append(movimentacaoFinanceiraDAO.updateMovimentacaoFinanceira(mf, valorAtt, tipoAtt, descricaoAtt));
 
                     JOptionPane.showMessageDialog(null, builder);
                     break;
 
                 case 4: //delete
                     builder = gui.headerMenuUser(usuarioLogado);
+                    builder.append(movimentacaoFinanceiraDAO.readMovimentacaoFinanceira());
                     builder.append("\nInforme o ID da Movimentação Financeira a ser deletada");
                     long IDdel = Long.parseLong(JOptionPane.showInputDialog(builder));
 

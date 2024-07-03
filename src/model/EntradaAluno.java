@@ -8,21 +8,31 @@ public class EntradaAluno {
 
     private long id;
     private LocalDateTime date_time;
-    private String nome;
+    private Pessoa pessoa;
     private LocalDate data_criacao;
     private LocalDate data_modificacao;
     private static long serial = 0;
 
 
     /* Funções de set */
+    public void setId(Long id)
+    {
+        this.id = id;
+    }
+
     public void setDateTime(LocalDateTime date_time)
     {
         this.date_time = date_time;
     }
-
-    public void setNomeAlunoIntoEntradaAluno(String nome)
+    public void setDateTimeFromBanco(String data)
     {
-        this.nome = nome;
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm:ss");
+        this.date_time = LocalDateTime.parse(data, dtf);
+    }
+
+    public void setPessoaIntoEntradaAluno(Pessoa p)
+    {
+        this.pessoa = p;
     }
 
     public void setDataID()
@@ -52,9 +62,9 @@ public class EntradaAluno {
         return this.date_time;
     }
 
-    public String getNomeAlunoFromEntradaAluno()
+    public Pessoa getPessoaFromEntradaAluno()
     {
-        return this.nome;
+        return this.pessoa;
     }
 
     public LocalDate getDataCriacao()

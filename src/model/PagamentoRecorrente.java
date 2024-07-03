@@ -12,17 +12,22 @@ public class PagamentoRecorrente {
     private Pessoa pessoa;
     private LocalDate data;
     private String cartao_credito;
-    private BigDecimal valor = new BigDecimal(0);
+    private BigDecimal valor = new BigDecimal("0");
     private LocalDate data_inicio;
     private int meses_aut;
     private LocalDate data_criacao;
     private LocalDate data_modificacao;
-    private static long serial = 0;
+    private static long serial_pagamento_recorrente = 0;
 
 
     MathContext context = new MathContext(2, RoundingMode.FLOOR);
 
     /* Funções de Set */
+    public void setId(Long id)
+    {
+        this.id = id;
+    }
+
     public void setPessoaIntoPagamentoRecorrente(Pessoa p)
     {
         this.pessoa = p;
@@ -31,6 +36,11 @@ public class PagamentoRecorrente {
     public void setDataPagamentoRecorrente()
     {
         this.data = LocalDate.now();
+    }
+    public void setDataPagamentoRecorrenteFromBanco(String data)
+    {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        this.data = LocalDate.parse(data, dtf);
     }
 
     public void setCartaoCreditoPagamentoRecorrente(String cartao)
@@ -58,7 +68,7 @@ public class PagamentoRecorrente {
     {
         this.data_criacao = LocalDate.now();
         this.data_modificacao = LocalDate.now();
-        this.id = ++PagamentoRecorrente.serial;
+        this.id = ++PagamentoRecorrente.serial_pagamento_recorrente;
     }
 
     public void setModData()
@@ -101,6 +111,16 @@ public class PagamentoRecorrente {
     public int getMesesAutPagamentoRecorrente()
     {
         return this.meses_aut;
+    }
+
+    public LocalDate getDataCriacao()
+    {
+        return this.data_criacao;
+    }
+
+    public LocalDate getDataModificacao()
+    {
+        return this.data_modificacao;
     }
 
 }

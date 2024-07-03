@@ -73,6 +73,7 @@ public class ControllerMenuAcademia {
             else if(opc_menu_academia == 5)
             {
                 builder.append(academiaDAO.pegarCalend());
+                JOptionPane.showMessageDialog(null, builder);
             }
             else if(opc_menu_academia == 6)
             {

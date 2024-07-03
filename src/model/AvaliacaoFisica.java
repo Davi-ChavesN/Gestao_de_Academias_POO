@@ -68,6 +68,7 @@ public class AvaliacaoFisica {
     }
 
 
+    /* Funções de Get */
     public long getID()
     {
         return this.id;

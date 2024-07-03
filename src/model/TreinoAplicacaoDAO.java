@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 public class TreinoAplicacaoDAO {
 
     TreinoAplicacao[] treinoAplicacao = new TreinoAplicacao[100];
@@ -9,15 +11,33 @@ public class TreinoAplicacaoDAO {
         
     }
 
-    public StringBuilder createTreinoAplicacao(Treino treino, Exercicio exercicio, ExercicioAplicacao exercicioAplicacao, DivisaoTreino divisaoTreino, DivisaoTreinoMusculo divisaoTreinoMusculo)
+    public StringBuilder createTreinoAplicacao(Treino treino, List<Exercicio> exercicio, List<ExercicioAplicacao> exercicioAplicacao, DivisaoTreino divisaoTreino, List<DivisaoTreinoMusculo> divisaoTreinoMusculo)
     {
         TreinoAplicacao ta = new TreinoAplicacao();
 
         ta.setTreinoIntoTreinoAplicacao(treino);
-        ta.setExercicioIntoTreinoAplicacao(exercicio);
-        ta.setExercicioAplicacaoIntoTreinoAplicacao(exercicioAplicacao);
+        // Aqui assumimos que a lista de exercícios, exercício_aplicacao e divisao_treino_musculo têm apenas um item. 
+        // Caso contrário, será necessário um tratamento adequado.
+        if (exercicio.size() == 1) {
+            ta.setExercicioIntoTreinoAplicacao(exercicio.get(0));
+        } else {
+            // Lidar com a situação onde há mais de um exercício
+        }
+
+        if (exercicioAplicacao.size() == 1) {
+            ta.setExercicioAplicacaoIntoTreinoAplicacao(exercicioAplicacao.get(0));
+        } else {
+            // Lidar com a situação onde há mais de uma aplicação de exercício
+        }
+
         ta.setDivisaoTreinoIntoTreinoAplicacao(divisaoTreino);
-        ta.setDivisaoTreinoMusculoIntoTreinoAplicacao(divisaoTreinoMusculo);
+
+        if (divisaoTreinoMusculo.size() == 1) {
+            ta.setDivisaoTreinoMusculoIntoTreinoAplicacao(divisaoTreinoMusculo.get(0));
+        } else {
+            // Lidar com a situação onde há mais de uma divisão de treino-musculo
+        }
+
         ta.setDataID();
 
         int i = 0;
@@ -36,7 +56,7 @@ public class TreinoAplicacaoDAO {
             }
             else
             {
-                StringBuilder builder = new StringBuilder("\nNão foi possivel adicionar a nova Aplicação de Treino!");
+                StringBuilder builder = new StringBuilder("\nNão foi possível adicionar a nova Aplicação de Treino!");
                 return builder;
             }
         }
